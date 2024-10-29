@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "pages:build": "npx @cloudflare/next-on-pages"
   },
   "dependencies": {
     "negotiator": "^1.0.0",
@@ -16,6 +17,7 @@
     "react-intl": "^6.8.4"
   },
   "devDependencies": {
+    "@cloudflare/next-on-pages": "^1.13.5",
     "@types/node": "22.8.4",
     "eslint": "^8",
     "eslint-config-next": "15.0.2",

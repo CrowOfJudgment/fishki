@@ -1,5 +1,7 @@
 import TestFirestore from "../../../components/TestFirestore";
 
+export const runtime = "edge";
+
 export default function Test() {
     return (
         <>

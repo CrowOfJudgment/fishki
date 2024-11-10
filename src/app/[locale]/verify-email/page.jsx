@@ -5,11 +5,10 @@ import { useRouter } from 'next/navigation';
 import { auth, db } from '../../../lib/firebaseConfig';
 import { isSignInWithEmailLink, signInWithEmailLink, updatePassword } from 'firebase/auth';
 import { setDoc, doc } from 'firebase/firestore';
-import Toast from '../../../components/Toast'; // Adjust the path as needed
+import Toast from '../../../components/Toast';
 import videoThumbnail from '../../../images/signupImage.webp';
 
 export const runtime = "edge";
-
 
 export default function VerifyEmail() {
     const [password, setPassword] = useState('');
@@ -35,15 +34,25 @@ export default function VerifyEmail() {
 
     const handleCompleteRegistration = async () => {
         try {
+            // Sign in the user with the email link
             const result = await signInWithEmailLink(auth, email, window.location.href);
             const user = result.user;
 
+            // Set a password for the user
             await updatePassword(user, password);
 
+            // Save basic user info in 'users' collection
             await setDoc(doc(db, 'users', user.uid), {
                 email: user.email,
-                restaurantName,
                 userId: user.uid,
+            });
+
+            // Save restaurant-specific data in 'restaurants' collection
+            await setDoc(doc(db, 'restaurants', user.uid), {
+                userId: user.uid,
+                restaurantName,
+                description: "Enter your restaurant description here",
+                ratingPrompt: "Please rate our service",
             });
 
             setToast({
@@ -72,7 +81,6 @@ export default function VerifyEmail() {
 
     return (
         <div className="flex min-h-screen bg-gray-800">
-            {/* Toast Notification */}
             {toast.visible && (
                 <Toast
                     message={toast.message}
@@ -81,13 +89,8 @@ export default function VerifyEmail() {
                 />
             )}
 
-            {/* Left Side - Image/Video Section */}
-            <div
-                className={`hidden md:flex md:w-1/2 bg-cover bg-center`}
-                style={{ backgroundImage: `url(${videoThumbnail.src})` }}
-            ></div>
+            <div className={`hidden md:flex md:w-1/2 bg-cover bg-center`} style={{ backgroundImage: `url(${videoThumbnail.src})` }}></div>
 
-            {/* Right Side - Complete Registration Form */}
             <div className="flex flex-col items-center justify-center w-full md:w-1/2 bg-white p-8 md:p-12">
                 <h2 className="text-3xl font-bold text-gray-800 mb-6">Complete Registration</h2>
                 <p className="text-gray-600 mb-4">Set your password to finalize your account setup.</p>

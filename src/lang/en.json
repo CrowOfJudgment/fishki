@@ -1,4 +1,14 @@
 {
-  "coming-soon.title": "Coming very soon to assist you with client reviews...",
-  "coming-soon.subtitle": "TableScan, get better feedback while protecting your reputation"
+  "complaint.bad-experience:sorry-text": "We're sorry you had a bad experience. Please share your feedback with us.",
+  "complaint.bad-experience:name-field": "Name (optional)",
+  "complaint.bad-experience:number-field": "Phone Number (optional)",
+  "complaint.bad-experience:problem-field": "Describe Your Problem",
+  "complaint.bad-experience:image-field": "Upload Image (optional)",
+  "complaint.bad-experience:submit": "Submit Feedback",
+  "complaint.bad-experience:choose-image": "Choose Image",
+  "good-review.good-experience:sorry-text": "Great! You liked our services. Would you like to rate us on Google?",
+  "good-review.good-experience:submit": "Rate on Google",
+  "submission.thank-you-title": "Thank you for your feedback!",
+  "submission.thank-you-message": "We appreciate you taking the time to share your experience. We will look into the issue as soon as possible.",
+  "submission.submit-another": "Submit Another Feedback"
 }

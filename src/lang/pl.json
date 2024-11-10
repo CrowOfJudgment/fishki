@@ -1,4 +1,14 @@
 {
-  "coming-soon.title": "Już wkrótce pomoc w recenzjach klientów...",
-  "coming-soon.subtitle": "TableScan, uzyskaj lepsze opinie, jednocześnie chroniąc swoją reputację"
+  "complaint.bad-experience:sorry-text": "Przepraszamy za złe doświadczenia. Prosimy o podzielenie się swoją opinią.",
+  "complaint.bad-experience:name-field": "Imię (opcjonalne)",
+  "complaint.bad-experience:number-field": "Numer telefonu (opcjonalne)",
+  "complaint.bad-experience:problem-field": "Opisz swój problem",
+  "complaint.bad-experience:image-field": "Prześlij zdjęcie (opcjonalne)",
+  "complaint.bad-experience:submit": "Prześlij opinię",
+  "complaint.bad-experience:choose-image": "Wybierz zdjęcie",
+  "good-review.good-experience:sorry-text": "Świetnie! Cieszymy się, że nasze usługi Ci się podobały. Chciałbyś ocenić nas na Google?",
+  "good-review.good-experience:submit": "Oceń nas na Google",
+  "submission.thank-you-title": "Dziękujemy za opinię!",
+  "submission.thank-you-message": "Dziękujemy za poświęcenie czasu na podzielenie się swoim doświadczeniem. Przyjrzymy się problemowi tak szybko, jak to możliwe.",
+  "submission.submit-another": "Prześlij kolejną opinię"
 }

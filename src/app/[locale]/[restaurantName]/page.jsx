@@ -94,9 +94,29 @@ export default function RestaurantRatingPage() {
         }
     };
 
-    const handleGoogleReviewSubmit = () => {
+    const handleGoogleReviewSubmit = async () => {
         if (googleReviewLink) {
-            window.location.href = googleReviewLink;
+            try {
+                // Get the current date and time
+                const date = new Date();
+                // Save the positive review data in Firestore
+                await addDoc(collection(db, 'good-reviews'), {
+                    restaurantName,
+                    rating,
+                    date: date.toLocaleDateString(),
+                    time: date.toLocaleTimeString(),
+                });
+
+                // Redirect to the Google Review link
+                window.location.href = googleReviewLink;
+            } catch (error) {
+                console.error("Error saving positive review:", error.message);
+                setToast({
+                    visible: true,
+                    message: "Error saving positive review. Please try again.",
+                    type: 'error',
+                });
+            }
         } else {
             setToast({
                 visible: true,

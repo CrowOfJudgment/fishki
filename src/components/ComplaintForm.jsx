@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Image from 'next/image';
 
 export default function ComplaintForm({ intl, handleComplaintSubmit }) {
     const [userName, setUserName] = useState('');
@@ -66,7 +67,13 @@ export default function ComplaintForm({ intl, handleComplaintSubmit }) {
                 </div>
                 {imagePreview && (
                     <div className="mt-3">
-                        <img src={imagePreview} alt="Image preview" className="w-32 h-32 object-cover rounded-lg shadow-md" />
+                        <Image
+                            src={imagePreview}
+                            alt="Image preview"
+                            width={128}
+                            height={128}
+                            className="object-cover rounded-lg shadow-md"
+                        />
                     </div>
                 )}
             </div>

@@ -14,7 +14,7 @@ export const runtime = "edge";
 export default function SignUp() {
     const [isMobile, setIsMobile] = useState(false);
     const [email, setEmail] = useState('');
-    const [restaurantName, setRestaurantName] = useState('');
+    const [tableScanLink, setTableScanLink] = useState('');
     const [showVerificationPrompt, setShowVerificationPrompt] = useState(false);
     const [toast, setToast] = useState({ visible: false, message: '', type: '' });
     const router = useRouter();
@@ -26,17 +26,17 @@ export default function SignUp() {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const handleRestaurantNameChange = (e) => {
+    const handleTableScanLinkChange = (e) => {
         const input = e.target.value;
         const formattedName = input.toLowerCase().replace(/\s+/g, '-');
-        setRestaurantName(formattedName);
+        setTableScanLink(formattedName);
     };
 
     const handleSignUp = async (e) => {
         e.preventDefault();
 
         const actionCodeSettings = {
-            url: `${window.location.origin}/verify-email?email=${encodeURIComponent(email)}&restaurantName=${encodeURIComponent(restaurantName)}`,
+            url: `${window.location.origin}/verify-email?email=${encodeURIComponent(email)}&tableScanLink=${encodeURIComponent(tableScanLink)}`,
             handleCodeInApp: true, // This allows you to handle the sign-in link in the app
         };
 
@@ -101,8 +101,8 @@ export default function SignUp() {
                             <label className="block text-gray-600 mb-2">Restaurant Name</label>
                             <input
                                 type="text"
-                                value={restaurantName}
-                                onChange={handleRestaurantNameChange}
+                                value={tableScanLink}
+                                onChange={handleTableScanLinkChange}
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 placeholder="Enter restaurant name"
                             />

@@ -1,21 +1,27 @@
-'use client'
+'use client';
 
 import ProtectedRoute from "../../../components/ProtectedRoute";
-import { useEffect, useState } from "react";
+import {useEffect, useRef, useState} from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth, db } from "../../../lib/firebaseConfig";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import Link from 'next/link';
 import Toast from "../../../components/Toast";
+import {QRCodeCanvas, QRCodeSVG} from 'qrcode.react'; // Import QRCodeSVG
 
 export const runtime = "edge";
 
 export default function Dashboard() {
     const [user, setUser] = useState(null);
+    const qrCodeRef = useRef();
+
+    const [tableScanLink, setTableScanLink] = useState("")
     const [restaurantName, setRestaurantName] = useState('');
     const [description, setDescription] = useState('');
+    const [description_pl, setDescriptionPL] = useState(''); // Polish translation for description
     const [ratingPrompt, setRatingPrompt] = useState('Please rate our service');
+    const [ratingPrompt_pl, setRatingPromptPL] = useState(''); // Polish translation for rating prompt
     const [googleReviewLink, setGoogleReviewLink] = useState('');
     const [toast, setToast] = useState({ visible: false, message: '', type: '' });
     const router = useRouter();
@@ -44,9 +50,12 @@ export default function Dashboard() {
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
                 const data = docSnap.data();
+                setTableScanLink(data.tableScanLink || '');
                 setRestaurantName(data.restaurantName || '');
                 setDescription(data.description || '');
+                setDescriptionPL(data.description_pl || ''); // Set Polish description
                 setRatingPrompt(data.ratingPrompt || 'Please rate our service');
+                setRatingPromptPL(data.ratingPrompt_pl || ''); // Set Polish Rating Prompt
                 setGoogleReviewLink(data.googleReviewLink || '');
             }
         } catch (error) {
@@ -67,7 +76,9 @@ export default function Dashboard() {
                 userId: user.uid,
                 restaurantName,
                 description,
+                description_pl, // Save Polish description
                 ratingPrompt,
+                ratingPrompt_pl,
                 googleReviewLink
             }, { merge: true });
 
@@ -83,6 +94,34 @@ export default function Dashboard() {
                 type: 'error',
             });
         }
+    };
+
+    const handleDownloadQRCode = () => {
+        const canvas = qrCodeRef.current.querySelector("canvas");
+        const pngUrl = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+        const downloadLink = document.createElement("a");
+        downloadLink.href = pngUrl;
+        downloadLink.download = "qrcode.png";
+        downloadLink.click();
+    };
+
+    const handleCopyLink = () => {
+        const link = `http://localhost:3000/track/${tableScanLink}`;
+        navigator.clipboard.writeText(link)
+            .then(() => {
+                setToast({
+                    visible: true,
+                    message: 'Link copied to clipboard',
+                    type: 'success',
+                });
+            })
+            .catch(err => {
+                setToast({
+                    visible: true,
+                    message: err,
+                    type: 'error',
+                });
+            });
     };
 
     const handleLogout = async () => {
@@ -117,7 +156,15 @@ export default function Dashboard() {
                 )}
 
                 <div className="w-full max-w-3xl mx-auto bg-white shadow-md rounded-lg p-8">
-                    <h2 className="text-2xl font-bold mb-4">Edit Your Restaurant Page</h2>
+                    <div className="flex items-center justify-between mb-4">
+                        <h2 className="text-2xl font-bold">Edit Your Restaurant Page</h2>
+                        <button
+                            onClick={handleLogout}
+                            className="py-2 px-4 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none"
+                        >
+                            Log Out
+                        </button>
+                    </div>
 
                     <div className="mb-4">
                         <label className="block text-gray-600 mb-2">Restaurant Name</label>
@@ -131,23 +178,44 @@ export default function Dashboard() {
                     </div>
 
                     <div className="mb-4">
-                        <label className="block text-gray-600 mb-2">Restaurant Description</label>
+                        <label className="block text-gray-600 mb-2">Restaurant Description (EN)</label>
                         <textarea
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                             className="w-full h-32 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Enter a description for your restaurant"
+                            placeholder="Enter a description for your restaurant in English"
                         ></textarea>
                     </div>
 
                     <div className="mb-4">
-                        <label className="block text-gray-600 mb-2">Rating Prompt</label>
+                        <label className="block text-gray-600 mb-2">Restaurant Description (PL)</label>
+                        <textarea
+                            value={description_pl}
+                            onChange={(e) => setDescriptionPL(e.target.value)}
+                            className="w-full h-32 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Enter a description for your restaurant in Polish"
+                        ></textarea>
+                    </div>
+
+                    <div className="mb-4">
+                        <label className="block text-gray-600 mb-2">Rating Prompt (EN)</label>
                         <input
                             type="text"
                             value={ratingPrompt}
                             onChange={(e) => setRatingPrompt(e.target.value)}
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Enter rating prompt text"
+                            placeholder="Enter rating prompt text in English"
+                        />
+                    </div>
+
+                    <div className="mb-4">
+                        <label className="block text-gray-600 mb-2">Rating Prompt (PL)</label>
+                        <input
+                            type="text"
+                            value={ratingPrompt_pl}
+                            onChange={(e) => setRatingPromptPL(e.target.value)}
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Enter rating prompt text in Polish"
                         />
                     </div>
 
@@ -169,16 +237,35 @@ export default function Dashboard() {
                         Save Changes
                     </button>
 
-                    <Link href={`/${restaurantName}`} className="block mt-4 text-blue-500 hover:underline text-center">
+                    <Link href={`/${tableScanLink}`} className="block mt-4 text-blue-500 hover:underline text-center">
                         View Public Page
                     </Link>
 
-                    <button
-                        onClick={handleLogout}
-                        className="mt-6 py-2 px-4 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none"
-                    >
-                        Log Out
-                    </button>
+                    {/* QR Code Section */}
+                    <div className="mt-8 flex flex-col items-center">
+                        <div ref={qrCodeRef}>
+                            <QRCodeCanvas
+                                value={`localhost:3000/track/${tableScanLink}`}
+                                size={128}
+                                level="H"
+                                includeMargin={true}
+                            />
+                        </div>
+
+                        {/* Download Button */}
+                        <button
+                            onClick={handleDownloadQRCode}
+                            className="mt-4 py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none"
+                        >
+                            Download QR Code
+                        </button>
+                        <button
+                            onClick={handleCopyLink}
+                            className="mt-4 py-2 px-4 bg-gray-600 text-white rounded-lg hover:bg-gray-700 focus:outline-none"
+                        >
+                            Or Copy the Link
+                        </button>
+                    </div>
                 </div>
             </div>
         </ProtectedRoute>

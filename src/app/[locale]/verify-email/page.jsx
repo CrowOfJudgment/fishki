@@ -13,14 +13,14 @@ export const runtime = "edge";
 export default function VerifyEmail() {
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
-    const [restaurantName, setRestaurantName] = useState('');
+    const [tableScanLink, setTableScanLink] = useState('');
     const [toast, setToast] = useState({ visible: false, message: '', type: '' });
     const router = useRouter();
 
     useEffect(() => {
         const storedEmail = window.localStorage.getItem("emailForSignIn");
         setEmail(storedEmail || new URLSearchParams(window.location.search).get('email'));
-        setRestaurantName(new URLSearchParams(window.location.search).get('restaurantName') || '');
+        setTableScanLink(new URLSearchParams(window.location.search).get('tableScanLink') || '');
 
         if (!isSignInWithEmailLink(auth, window.location.href)) {
             setToast({
@@ -50,7 +50,7 @@ export default function VerifyEmail() {
             // Save restaurant-specific data in 'restaurants' collection
             await setDoc(doc(db, 'restaurants', user.uid), {
                 userId: user.uid,
-                restaurantName,
+                tableScanLink,
                 description: "Enter your restaurant description here",
                 ratingPrompt: "Please rate our service",
             });

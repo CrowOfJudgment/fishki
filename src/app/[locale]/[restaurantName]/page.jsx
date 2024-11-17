@@ -18,6 +18,7 @@ export const runtime = "edge";
 
 export default function RestaurantRatingPage() {
     const { restaurantName } = useParams();
+    const [restaurantTitle, setRestaurantTitle] = useState("");
     const [description, setDescription] = useState('');
     const [ratingPrompt, setRatingPrompt] = useState('Please rate our service');
     const [rating, setRating] = useState(0);
@@ -61,13 +62,14 @@ export default function RestaurantRatingPage() {
             }
 
             try {
-                const q = query(collection(db, 'restaurants'), where('restaurantName', '==', restaurantName));
+                const q = query(collection(db, 'restaurants'), where('tableScanLink', '==', restaurantName));
                 const querySnapshot = await getDocs(q);
 
                 if (!querySnapshot.empty) {
                     const data = querySnapshot.docs[0].data();
                     setDescription(locale === 'en' ? data.description : data.description_pl);
                     setRatingPrompt(locale === 'en' ? data.ratingPrompt : data.ratingPrompt_pl);
+                    setRestaurantTitle(data.restaurantName);
                     setGoogleReviewLink(data.googleReviewLink || ''); // Fetch googleReviewLink
                     setIsNotFound(false);
                 } else {
@@ -195,7 +197,7 @@ export default function RestaurantRatingPage() {
             )}
 
             <div className="max-w-md w-full bg-white shadow-lg rounded-lg p-6 text-center">
-                <h1 className="text-3xl font-bold mb-4">{restaurantName?.replace('-', ' ')}</h1>
+                <h1 className="text-3xl font-bold mb-4">{restaurantTitle}</h1>
                 <p className="text-gray-600 mb-6">{description}</p>
 
                 <h2 className="text-xl font-semibold mb-2">{ratingPrompt}</h2>

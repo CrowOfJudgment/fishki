@@ -13,6 +13,8 @@ import SubmissionConfirmation from '@/components/SubmissionConfirmation';
 import Toast from '@/components/Toast';
 import { i18n } from '../../../../i18n-config';
 import { getIntl } from '../../../lib/intl';
+import Image from 'next/image'; // Import Next.js Image component
+import bgImage from '../../../images/ORFF0J0.jpg'
 
 export const runtime = "edge";
 
@@ -30,11 +32,10 @@ export default function RestaurantRatingPage() {
     const [toast, setToast] = useState({ visible: false, message: '', type: '' });
     const [locale, setLocale] = useState(i18n.defaultLocale);
     const [intl, setIntl] = useState(null);
-    const [submitted, setSubmitted] = useState(false); // Track submission state
+    const [submitted, setSubmitted] = useState(false);
 
     const router = useRouter();
 
-    // Toggle language and refresh page
     const toggleLanguage = () => {
         const newLocale = locale === 'en' ? 'pl' : 'en';
         setLocale(newLocale);
@@ -42,7 +43,6 @@ export default function RestaurantRatingPage() {
         router.refresh();
     };
 
-    // Fetch translations based on current locale
     useEffect(() => {
         const fetchIntl = async () => {
             const intlInstance = await getIntl(locale);
@@ -51,7 +51,6 @@ export default function RestaurantRatingPage() {
         fetchIntl();
     }, [locale]);
 
-    // Fetch restaurant data from Firestore
     useEffect(() => {
         const fetchRestaurantData = async () => {
             setLoading(true);
@@ -70,7 +69,7 @@ export default function RestaurantRatingPage() {
                     setDescription(locale === 'en' ? data.description : data.description_pl);
                     setRatingPrompt(locale === 'en' ? data.ratingPrompt : data.ratingPrompt_pl);
                     setRestaurantTitle(data.restaurantName);
-                    setGoogleReviewLink(data.googleReviewLink || ''); // Fetch googleReviewLink
+                    setGoogleReviewLink(data.googleReviewLink || '');
                     setIsNotFound(false);
                 } else {
                     setIsNotFound(true);
@@ -99,9 +98,7 @@ export default function RestaurantRatingPage() {
     const handleGoogleReviewSubmit = async () => {
         if (googleReviewLink) {
             try {
-                // Get the current date and time
                 const date = new Date();
-                // Save the positive review data in Firestore
                 await addDoc(collection(db, 'good-reviews'), {
                     restaurantName,
                     rating,
@@ -109,10 +106,8 @@ export default function RestaurantRatingPage() {
                     time: date.toLocaleTimeString(),
                 });
 
-                // Redirect to the Google Review link
                 window.location.href = googleReviewLink;
             } catch (error) {
-                console.error("Error saving positive review:", error.message);
                 setToast({
                     visible: true,
                     message: "Error saving positive review. Please try again.",
@@ -148,7 +143,7 @@ export default function RestaurantRatingPage() {
                 time: new Date().toLocaleTimeString(),
             });
 
-            setSubmitted(true); // Show the SubmissionConfirmation component
+            setSubmitted(true);
             setToast({
                 visible: true,
                 message: 'Thank you for your feedback. We will look into the issue.',
@@ -164,7 +159,7 @@ export default function RestaurantRatingPage() {
     };
 
     const resetForm = () => {
-        setSubmitted(false); // Reset to show the complaint form again
+        setSubmitted(false);
     };
 
     if (loading) {
@@ -180,47 +175,62 @@ export default function RestaurantRatingPage() {
     }
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4 relative">
-            <button
-                onClick={toggleLanguage}
-                className="absolute top-4 right-4 bg-gray-800 text-white px-3 py-1 rounded-md hover:bg-gray-700"
-            >
-                {locale === 'en' ? 'PL' : 'EN'}
-            </button>
-
-            {toast.visible && (
-                <Toast
-                    message={toast.message}
-                    type={toast.type}
-                    onClose={() => setToast({ visible: false, message: '', type: '' })}
+        <div className="relative min-h-screen w-full">
+            <div className="absolute top-0 left-0 right-0 bottom-0 z-[-10]">
+                <Image
+                    src={bgImage}  // Replace with your image path
+                    alt="Background Image"
+                    layout="fill"
+                    objectFit="cover"
+                    quality={100}
+                    className="filter blur-[1px] scale-[1.1] object-cover"
                 />
-            )}
+            </div>
 
-            <div className="max-w-md w-full bg-white shadow-lg rounded-lg p-6 text-center">
-                <h1 className="text-3xl font-bold mb-4">{restaurantTitle}</h1>
-                <p className="text-gray-600 mb-6">{description}</p>
+            <div className="absolute top-0 left-0 right-0 bottom-0 bg-black bg-opacity-40 backdrop-blur-sm z-[-5]"/>
 
-                <h2 className="text-xl font-semibold mb-2">{ratingPrompt}</h2>
-                <StarRating rating={rating} handleRating={handleRating} />
+            <div className="flex items-center justify-center min-h-screen p-4 relative z-10">
+                <button
+                    onClick={toggleLanguage}
+                    className="absolute top-4 right-4 bg-gray-800 text-white px-3 py-1 rounded-md hover:bg-gray-700"
+                >
+                    {locale === 'en' ? 'PL' : 'EN'}
+                </button>
 
-                {submitted ? (
-                    <SubmissionConfirmation onReset={resetForm} intl={intl} />
-                ) : (
-                    <>
-                        {showGoogleReviewPrompt && (
-                            <GoogleReviewPrompt
-                                handleGoogleReviewSubmit={handleGoogleReviewSubmit}
-                                intl={intl}
-                            />
-                        )}
-                        {showComplaintForm && (
-                            <ComplaintForm
-                                handleComplaintSubmit={handleComplaintSubmit}
-                                intl={intl}
-                            />
-                        )}
-                    </>
+                {toast.visible && (
+                    <Toast
+                        message={toast.message}
+                        type={toast.type}
+                        onClose={() => setToast({visible: false, message: '', type: ''})}
+                    />
                 )}
+
+                <div className="max-w-md w-full bg-white shadow-lg rounded-lg p-6 text-center">
+                    <h1 className="text-3xl font-bold mb-4">{restaurantTitle}</h1>
+                    <p className="text-gray-600 mb-6">{description}</p>
+
+                    <h2 className="text-xl font-semibold mb-2">{ratingPrompt}</h2>
+                    <StarRating rating={rating} handleRating={handleRating}/>
+
+                    {submitted ? (
+                        <SubmissionConfirmation onReset={resetForm} intl={intl}/>
+                    ) : (
+                        <>
+                            {showGoogleReviewPrompt && (
+                                <GoogleReviewPrompt
+                                    handleGoogleReviewSubmit={handleGoogleReviewSubmit}
+                                    intl={intl}
+                                />
+                            )}
+                            {showComplaintForm && (
+                                <ComplaintForm
+                                    handleComplaintSubmit={handleComplaintSubmit}
+                                    intl={intl}
+                                />
+                            )}
+                        </>
+                    )}
+                </div>
             </div>
         </div>
     );

@@ -106,7 +106,7 @@ export default function Dashboard() {
     };
 
     const handleCopyLink = () => {
-        const link = `http://localhost:3000/track/${tableScanLink}`;
+        const link = `https://tablescan.pages.dev/track/${tableScanLink}`;
         navigator.clipboard.writeText(link)
             .then(() => {
                 setToast({
@@ -245,7 +245,7 @@ export default function Dashboard() {
                     <div className="mt-8 flex flex-col items-center">
                         <div ref={qrCodeRef}>
                             <QRCodeCanvas
-                                value={`localhost:3000/track/${tableScanLink}`}
+                                value={`https://tablescan.pages.dev/track/${tableScanLink}`}
                                 size={128}
                                 level="H"
                                 includeMargin={true}

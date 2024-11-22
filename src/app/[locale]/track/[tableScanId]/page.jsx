@@ -24,7 +24,7 @@ const TrackPage = () => {
                 });
 
                 // Redirect to the table scan page
-                router.replace(`http://localhost:3000/${tableScanId}`);
+                router.replace(`https://tablescan.pages.dev/${tableScanId}`);
             } catch (error) {
                 console.error("Error logging scan event:", error);
             }

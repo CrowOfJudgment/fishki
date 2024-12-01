@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { db, storage } from '../../../lib/firebaseConfig';
+import { db, storage } from '../../../../lib/firebaseConfig';
 import { collection, query, where, getDocs, addDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import NotFoundPage from "@/components/NotFoundPage";
@@ -11,10 +11,10 @@ import GoogleReviewPrompt from '@/components/GoogleReviewPrompt';
 import ComplaintForm from '@/components/ComplaintForm';
 import SubmissionConfirmation from '@/components/SubmissionConfirmation';
 import Toast from '@/components/Toast';
-import { i18n } from '../../../../i18n-config';
-import { getIntl } from '../../../lib/intl';
+import { i18n } from '../../../../../i18n-config';
+import { getIntl } from '../../../../lib/intl';
 import Image from 'next/image'; // Import Next.js Image component
-import bgImage from '../../../images/ORFF0J0.jpg'
+import bgImage from '../../../../images/ORFF0J0.jpg'
 
 export const runtime = "edge";
 
@@ -176,7 +176,7 @@ export default function RestaurantRatingPage() {
 
     return (
         <div className="relative min-h-screen w-full">
-            <div className="absolute top-0 left-0 right-0 bottom-0 z-[-10]">
+            <div className="fixed top-0 left-0 w-screen h-screen z-[-10]">
                 <Image
                     src={bgImage}  // Replace with your image path
                     alt="Background Image"

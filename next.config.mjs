@@ -10,5 +10,9 @@ const nextConfig = {
         };
         return config;
     },
+    images: {
+        domains: ['firebasestorage.googleapis.com'], // Allow Firebase Storage domain
+    },
 };
+
 export default nextConfig;

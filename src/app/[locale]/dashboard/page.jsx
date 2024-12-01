@@ -1,14 +1,15 @@
 'use client';
 
 import ProtectedRoute from "../../../components/ProtectedRoute";
-import {useEffect, useRef, useState} from "react";
+import { useEffect, useRef, useState } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth, db } from "../../../lib/firebaseConfig";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import Link from 'next/link';
 import Toast from "../../../components/Toast";
-import {QRCodeCanvas, QRCodeSVG} from 'qrcode.react'; // Import QRCodeSVG
+import { QRCodeCanvas } from 'qrcode.react';
+import MenuDashboard from "../../../components/MenuDashboard"; // Import QRCodeCanvas
 
 export const runtime = "edge";
 
@@ -16,7 +17,7 @@ export default function Dashboard() {
     const [user, setUser] = useState(null);
     const qrCodeRef = useRef();
 
-    const [tableScanLink, setTableScanLink] = useState("")
+    const [tableScanLink, setTableScanLink] = useState("");
     const [restaurantName, setRestaurantName] = useState('');
     const [description, setDescription] = useState('');
     const [description_pl, setDescriptionPL] = useState(''); // Polish translation for description
@@ -24,6 +25,7 @@ export default function Dashboard() {
     const [ratingPrompt_pl, setRatingPromptPL] = useState(''); // Polish translation for rating prompt
     const [googleReviewLink, setGoogleReviewLink] = useState('');
     const [toast, setToast] = useState({ visible: false, message: '', type: '' });
+    const [activeTab, setActiveTab] = useState('reviews'); // State for tab navigation
     const router = useRouter();
 
     useEffect(() => {
@@ -166,106 +168,138 @@ export default function Dashboard() {
                         </button>
                     </div>
 
-                    <div className="mb-4">
-                        <label className="block text-gray-600 mb-2">Restaurant Name</label>
-                        <input
-                            type="text"
-                            value={restaurantName}
-                            onChange={(e) => setRestaurantName(e.target.value)}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Enter your restaurant name"
-                        />
+                    {/* Tabs Navigation */}
+                    <div className="border-b mb-6">
+                        <button
+                            onClick={() => setActiveTab('reviews')}
+                            className={`py-2 px-4 ${activeTab === 'reviews' ? 'border-b-2 border-blue-600 font-bold' : 'text-gray-600'}`}
+                        >
+                            Reviews
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('menu')}
+                            className={`py-2 px-4 ${activeTab === 'menu' ? 'border-b-2 border-blue-600 font-bold' : 'text-gray-600'}`}
+                        >
+                            Menu
+                        </button>
                     </div>
 
-                    <div className="mb-4">
-                        <label className="block text-gray-600 mb-2">Restaurant Description (EN)</label>
-                        <textarea
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                            className="w-full h-32 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Enter a description for your restaurant in English"
-                        ></textarea>
-                    </div>
+                    {/* Tab Content */}
+                    {activeTab === 'reviews' && (
+                        <div>
+                            <div className="mb-4">
+                                <label className="block text-gray-600 mb-2">Restaurant Name</label>
+                                <input
+                                    type="text"
+                                    value={restaurantName}
+                                    onChange={(e) => setRestaurantName(e.target.value)}
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Enter your restaurant name"
+                                />
+                            </div>
 
-                    <div className="mb-4">
-                        <label className="block text-gray-600 mb-2">Restaurant Description (PL)</label>
-                        <textarea
-                            value={description_pl}
-                            onChange={(e) => setDescriptionPL(e.target.value)}
-                            className="w-full h-32 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Enter a description for your restaurant in Polish"
-                        ></textarea>
-                    </div>
+                            <div className="mb-4">
+                                <label className="block text-gray-600 mb-2">Restaurant Description (EN)</label>
+                                <textarea
+                                    value={description}
+                                    onChange={(e) => setDescription(e.target.value)}
+                                    className="w-full h-32 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Enter a description for your restaurant in English"
+                                ></textarea>
+                            </div>
 
-                    <div className="mb-4">
-                        <label className="block text-gray-600 mb-2">Rating Prompt (EN)</label>
-                        <input
-                            type="text"
-                            value={ratingPrompt}
-                            onChange={(e) => setRatingPrompt(e.target.value)}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Enter rating prompt text in English"
-                        />
-                    </div>
+                            <div className="mb-4">
+                                <label className="block text-gray-600 mb-2">Restaurant Description (PL)</label>
+                                <textarea
+                                    value={description_pl}
+                                    onChange={(e) => setDescriptionPL(e.target.value)}
+                                    className="w-full h-32 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Enter a description for your restaurant in Polish"
+                                ></textarea>
+                            </div>
 
-                    <div className="mb-4">
-                        <label className="block text-gray-600 mb-2">Rating Prompt (PL)</label>
-                        <input
-                            type="text"
-                            value={ratingPrompt_pl}
-                            onChange={(e) => setRatingPromptPL(e.target.value)}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Enter rating prompt text in Polish"
-                        />
-                    </div>
+                            <div className="mb-4">
+                                <label className="block text-gray-600 mb-2">Rating Prompt (EN)</label>
+                                <input
+                                    type="text"
+                                    value={ratingPrompt}
+                                    onChange={(e) => setRatingPrompt(e.target.value)}
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Enter rating prompt text in English"
+                                />
+                            </div>
 
-                    <div className="mb-4">
-                        <label className="block text-gray-600 mb-2">Google Maps Review Link</label>
-                        <input
-                            type="url"
-                            value={googleReviewLink}
-                            onChange={(e) => setGoogleReviewLink(e.target.value)}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Enter Google Maps review link"
-                        />
-                    </div>
+                            <div className="mb-4">
+                                <label className="block text-gray-600 mb-2">Rating Prompt (PL)</label>
+                                <input
+                                    type="text"
+                                    value={ratingPrompt_pl}
+                                    onChange={(e) => setRatingPromptPL(e.target.value)}
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Enter rating prompt text in Polish"
+                                />
+                            </div>
 
-                    <button
-                        onClick={handleSave}
-                        className="w-full py-2 mt-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none"
-                    >
-                        Save Changes
-                    </button>
+                            <div className="mb-4">
+                                <label className="block text-gray-600 mb-2">Google Maps Review Link</label>
+                                <input
+                                    type="url"
+                                    value={googleReviewLink}
+                                    onChange={(e) => setGoogleReviewLink(e.target.value)}
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Enter Google Maps review link"
+                                />
+                            </div>
 
-                    <Link href={`/${tableScanLink}`} className="block mt-4 text-blue-500 hover:underline text-center">
-                        View Public Page
-                    </Link>
+                            {/* Save Changes Button */}
+                            <button
+                                onClick={handleSave}
+                                className="w-full py-2 mt-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none"
+                            >
+                                Save Changes
+                            </button>
 
-                    {/* QR Code Section */}
-                    <div className="mt-8 flex flex-col items-center">
-                        <div ref={qrCodeRef}>
-                            <QRCodeCanvas
-                                value={`https://tablescan.pages.dev/track/${tableScanLink}`}
-                                size={128}
-                                level="H"
-                                includeMargin={true}
-                            />
+
+                            {/* QR Code Section */}
+                            <div className="mt-8 flex flex-col items-center">
+                                <div ref={qrCodeRef}>
+                                    <QRCodeCanvas
+                                        value={`https://tablescan.pages.dev/track/${tableScanLink}`}
+                                        size={128}
+                                        level="H"
+                                        includeMargin={true}
+                                    />
+                                </div>
+
+                                {/* Download Button */}
+                                <button
+                                    onClick={handleDownloadQRCode}
+                                    className="mt-4 py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none"
+                                >
+                                    Download QR Code
+                                </button>
+
+                                {/* Copy Link Button */}
+                                <button
+                                    onClick={handleCopyLink}
+                                    className="mt-4 py-2 px-4 bg-gray-600 text-white rounded-lg hover:bg-gray-700 focus:outline-none"
+                                >
+                                    Copy the Link
+                                </button>
+
+                                {/* Link to Public Page */}
+                                <Link href={`/review/${tableScanLink}`} className="block mt-4 text-blue-500 hover:underline text-center">
+                                    View Public Page
+                                </Link>
+                            </div>
+
+
                         </div>
+                    )}
 
-                        {/* Download Button */}
-                        <button
-                            onClick={handleDownloadQRCode}
-                            className="mt-4 py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none"
-                        >
-                            Download QR Code
-                        </button>
-                        <button
-                            onClick={handleCopyLink}
-                            className="mt-4 py-2 px-4 bg-gray-600 text-white rounded-lg hover:bg-gray-700 focus:outline-none"
-                        >
-                            Or Copy the Link
-                        </button>
-                    </div>
+                    {activeTab === 'menu' && (
+                        <MenuDashboard />
+                    )}
                 </div>
             </div>
         </ProtectedRoute>

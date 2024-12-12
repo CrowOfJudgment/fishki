@@ -24,7 +24,7 @@ const plans = [
     {
         title: 'Yearly Plan',
         description: 'Save 20% by opting for an annual subscription.',
-        link: process.env.NODE_ENV === 'development' ? 'https://buy.stripe.com/test_4gw1663JFeefcX6145' : process.env.STRIPE_YEARLY_SUB_PAYMENT_LINK,
+        link: process.env.NODE_ENV === 'development' ? 'https://buy.stripe.com/test_4gw1663JFeefcX6145' : 'https://buy.stripe.com/7sI14A5Es5KSbBecMN',
         priceId: process.env.NODE_ENV === 'development' ? 'price_1QM7ajGdy48dKxUYilYFLXGy' : '',
         price: 1152,
         duration: '/year'

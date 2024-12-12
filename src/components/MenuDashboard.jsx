@@ -9,8 +9,8 @@ import Toast from "./Toast";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Import for Firebase Storage
 import { db, storage, auth } from '../lib/firebaseConfig';
 
-export default function MenuDashboard() {
-    const [user, setUser] = useState(null);
+export default function MenuDashboard({ user }) {
+    // const [user, setUser] = useState(null);
     const [foodName, setFoodName] = useState('');
     const [name_pl, setFoodNamePl] = useState('');
     const [description, setDescription] = useState('');
@@ -22,6 +22,7 @@ export default function MenuDashboard() {
     const [isKosher, setIsKosher] = useState(false);
     const [foodImage, setFoodImage] = useState(null);
     const [tableScanLink, setTableScanLink] = useState('');
+    const [hasAccess, setHasAccess] = useState(false)
     const [toast, setToast] = useState({ visible: false, message: '', type: '' });
 
     const router = useRouter();
@@ -32,11 +33,11 @@ export default function MenuDashboard() {
                 if (!currentUser.emailVerified) {
                     router.push('/signup');
                 } else {
-                    setUser(currentUser);
+                    // setUser(currentUser);
                     await fetchRestaurantData(currentUser.uid);
                 }
             } else {
-                setUser(null);
+                // setUser(null);
                 router.push('/login');
             }
         });
@@ -51,6 +52,7 @@ export default function MenuDashboard() {
             if (docSnap.exists()) {
                 const data = docSnap.data();
                 setTableScanLink(data.tableScanLink || '');
+                setHasAccess(data.hasAccess || false)
             }
         } catch (error) {
             setToast({
@@ -112,7 +114,7 @@ export default function MenuDashboard() {
             // Save or update the menu in Firestore
             await setDoc(
                 menuRef,
-                { tableScanLink: tableScanLink, items: updatedItems },
+                { tableScanLink: tableScanLink, items: updatedItems, hasAccess: hasAccess, userId: user.uid },
                 { merge: true }
             );
 

@@ -6,10 +6,15 @@ import { db } from "../../../../lib/firebaseConfig";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import Image from "next/image";
 import { i18n } from "../../../../../i18n-config"; // Import i18n config
-import { getIntl } from "../../../../lib/intl"; // Load localized strings
+import { getIntl } from "../../../../lib/intl";
+import {setRestaurantIsEnabled} from "../../../../lib/helper-functions";
+import PageUnavailable from "../../../../components/PageUnavailable"; // Load localized strings
+
+export const runtime = "edge";
 
 export default function RestaurantMenuPage() {
     const { restaurantName } = useParams();
+    const [isEnabled, setIsEnabled] = useState(false)
     const [menuItems, setMenuItems] = useState([]);
     const [isNotFound, setIsNotFound] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -54,6 +59,7 @@ export default function RestaurantMenuPage() {
                 if (!querySnapshot.empty) {
                     const restaurantData = querySnapshot.docs[0].data();
                     setMenuItems(restaurantData.items || []); // Menu items
+                    setIsEnabled(await setRestaurantIsEnabled(restaurantData.userId))
                     setIsNotFound(false);
                 } else {
                     setIsNotFound(true);
@@ -89,74 +95,81 @@ export default function RestaurantMenuPage() {
         );
     }
 
-    return (
-        <div className="bg-gray-100 min-h-screen p-4">
-            {/* Language Toggle */}
-            <button
-                onClick={toggleLanguage}
-                className="fixed top-4 right-4 bg-gray-800 text-white px-3 py-1 rounded-md hover:bg-gray-700 z-50"
-            >
-                {locale === "en" ? "PL" : "EN"}
-            </button>
+    if (isEnabled) {
+        return (
+            <div className="bg-gray-100 min-h-screen p-4">
+                {/* Language Toggle */}
+                <button
+                    onClick={toggleLanguage}
+                    className="fixed top-4 right-4 bg-gray-800 text-white px-3 py-1 rounded-md hover:bg-gray-700 z-50"
+                >
+                    {locale === "en" ? "PL" : "EN"}
+                </button>
 
 
-            {menuItems.length > 0 ? (
-                <div className="grid grid-cols-1 gap-4">
-                    {menuItems.map((item, index) => (
-                        <div
-                            key={index}
-                            className="bg-white rounded-lg shadow-md p-4 flex flex-col gap-4"
-                        >
-                            {item.image && (
-                                <Image
-                                    src={item.image}
-                                    alt={locale === "en" ? item.name : item.name_pl}
-                                    width={300}
-                                    height={200}
-                                    className="w-full h-48 object-cover rounded-md"
-                                />
-                            )}
-                            <div className="flex justify-between items-center">
-                                <h2 className="text-xl font-semibold">
-                                    {locale === "en" ? item.name : item.name_pl}
-                                </h2>
-                                <span className="text-blue-600 font-bold">
+                {menuItems.length > 0 ? (
+                    <div className="grid grid-cols-1 gap-4">
+                        {menuItems.map((item, index) => (
+                            <div
+                                key={index}
+                                className="bg-white rounded-lg shadow-md p-4 flex flex-col gap-4"
+                            >
+                                {item.image && (
+                                    <Image
+                                        src={item.image}
+                                        alt={locale === "en" ? item.name : item.name_pl}
+                                        width={300}
+                                        height={200}
+                                        className="w-full h-48 object-cover rounded-md"
+                                    />
+                                )}
+                                <div className="flex justify-between items-center">
+                                    <h2 className="text-xl font-semibold">
+                                        {locale === "en" ? item.name : item.name_pl}
+                                    </h2>
+                                    <span className="text-blue-600 font-bold">
                                     {item.price.toFixed(2)} PLN
                                 </span>
-                            </div>
-                            <p className="text-gray-600">
-                                {locale === "en" ? item.description : item.description_pl}
-                            </p>
-                            <div className="flex gap-2 flex-wrap">
-                                {item.isVegan && (
-                                    <span className="px-2 py-1 bg-green-200 text-green-800 text-sm rounded">
+                                </div>
+                                <p className="text-gray-600">
+                                    {locale === "en" ? item.description : item.description_pl}
+                                </p>
+                                <div className="flex gap-2 flex-wrap">
+                                    {item.isVegan && (
+                                        <span className="px-2 py-1 bg-green-200 text-green-800 text-sm rounded">
                                         {intl?.vegan || "Vegan"} 🌱
                                     </span>
-                                )}
-                                {item.isVegetarian && (
-                                    <span className="px-2 py-1 bg-orange-200 text-orange-800 text-sm rounded">
+                                    )}
+                                    {item.isVegetarian && (
+                                        <span className="px-2 py-1 bg-orange-200 text-orange-800 text-sm rounded">
                                         {intl?.vegetarian || "Vegetarian"} 🥕
                                     </span>
-                                )}
-                                {item.isHalal && (
-                                    <span className="px-2 py-1 bg-teal-200 text-teal-800 text-sm rounded">
+                                    )}
+                                    {item.isHalal && (
+                                        <span className="px-2 py-1 bg-teal-200 text-teal-800 text-sm rounded">
                                         {intl?.halal || "Halal"} 🕌
                                     </span>
-                                )}
-                                {item.isKosher && (
-                                    <span className="px-2 py-1 bg-purple-200 text-purple-800 text-sm rounded">
+                                    )}
+                                    {item.isKosher && (
+                                        <span className="px-2 py-1 bg-purple-200 text-purple-800 text-sm rounded">
                                         {intl?.kosher || "Kosher"} ✡️
                                     </span>
-                                )}
+                                    )}
+                                </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
-            ) : (
-                <p className="text-center text-gray-600">
-                    {intl?.noItems || "No menu items available at the moment."}
-                </p>
-            )}
-        </div>
-    );
+                        ))}
+                    </div>
+                ) : (
+                    <p className="text-center text-gray-600">
+                        {intl?.noItems || "No menu items available at the moment."}
+                    </p>
+                )}
+            </div>
+        );
+    }
+    else {
+        return (
+            <PageUnavailable />
+        )
+    }
 }

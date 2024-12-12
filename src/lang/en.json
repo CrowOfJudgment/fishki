@@ -10,5 +10,19 @@
   "good-review.good-experience:submit": "Rate on Google",
   "submission.thank-you-title": "Thank you for your feedback!",
   "submission.thank-you-message": "We appreciate you taking the time to share your experience. We will look into the issue as soon as possible.",
-  "submission.submit-another": "Submit Another Feedback"
+  "submission.submit-another": "Submit Another Feedback",
+  "pricing.monthly": "Monthly",
+  "pricing.yearly": "Yearly",
+  "pricing.monthly-plan-title": "Monthly Plan",
+  "pricing.monthly-plan-description": "Ideal for businesses that need flexibility with monthly payments.",
+  "pricing.monthly-price": "350",
+  "pricing.yearly-plan-title": "Yearly Plan",
+  "pricing.yearly-plan-description": "Save 20% by opting for an annual subscription.",
+  "pricing.yearly-price": "3360",
+  "pricing.year": "/year",
+  "pricing.month": "/month",
+  "pricing.unlimited-access": "✔ Unlimited access to all features",
+  "pricing.priority-support": "✔ Priority support",
+  "pricing.free-updates": "✔ Free updates",
+  "pricing.choose-plan": "Choose Plan"
 }

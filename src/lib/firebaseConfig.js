@@ -2,6 +2,8 @@ import { getAuth } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
 import {getFirestore} from "firebase/firestore";
+import { getStripePayments } from "@invertase/firestore-stripe-payments";
+import { getApp } from "@firebase/app";
 
 export const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -14,10 +16,16 @@ export const firebaseConfig = {
 };
 
 // Initialize Firebase app
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
+const zeApp = getApp()
 const auth = getAuth(app);
 const storage = getStorage(app);
 const db = getFirestore(app);
+
+export const payments = getStripePayments(zeApp, {
+    productsCollection: "products",
+    customersCollection: "users",
+});
 
 
 export { db };

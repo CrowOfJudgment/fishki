@@ -16,9 +16,9 @@ const plans = [
     {
         title: 'Monthly Plan',
         description: 'Ideal for businesses that need flexibility with monthly payments.',
-        link: process.env.NODE_ENV === 'development' ? 'https://buy.stripe.com/test_bIY9CC6VRdabbT29AA' : '',
+        link: process.env.NODE_ENV === 'development' ? 'https://buy.stripe.com/test_bIY9CC6VRdabbT29AA' : process.env.STRIPE_MONTHLY_SUB_PAYMENT_LINK,
         priceId: process.env.NODE_ENV === 'development' ? 'price_1QM7PGGdy48dKxUYziPmxNb5' : '',
-        price: 350,
+        price: 120,
         duration: '/month'
     },
     {
@@ -26,7 +26,7 @@ const plans = [
         description: 'Save 20% by opting for an annual subscription.',
         link: process.env.NODE_ENV === 'development' ? 'https://buy.stripe.com/test_4gw1663JFeefcX6145' : '',
         priceId: process.env.NODE_ENV === 'development' ? 'price_1QM7ajGdy48dKxUYilYFLXGy' : '',
-        price: 3360,
+        price: 1152,
         duration: '/year'
     }
 ];

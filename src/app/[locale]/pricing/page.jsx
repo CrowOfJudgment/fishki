@@ -12,7 +12,7 @@ import Link from "next/link";
 
 export const runtime = "edge";
 
-export const plans = [
+const plans = [
     {
         title: 'Monthly Plan',
         description: 'Ideal for businesses that need flexibility with monthly payments.',

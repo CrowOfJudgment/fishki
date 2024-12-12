@@ -1,177 +1,113 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { db } from '../../../../lib/firebaseConfig';
-import {collection, query, where, getDocs, addDoc, updateDoc, doc, setDoc} from "firebase/firestore";
-import {headers} from "next/headers";
+import { collection, query, where, getDocs, updateDoc, doc } from "firebase/firestore";
+import { headers } from "next/headers";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
-import { auth } from "../../../../lib/firebaseConfig";
-export async function getCurrentUser() {
-    return new Promise((resolve, reject) => {
-        const unsubscribe = auth.onAuthStateChanged((user) => {
-            unsubscribe(); // Cleanup the listener immediately
-            if (user) {
-                resolve(user); // User is signed in
-            } else {
-                resolve(null); // No user is signed in
-            }
-        }, (error) => {
-            unsubscribe(); // Cleanup in case of error
-            reject(error); // Reject on error
-        });
-    });
-}
-
-
 export async function POST(req) {
-    const currentUser = await getCurrentUser()
-
-    const body = await req.text();
-    // Await headers() to retrieve Stripe signature
     const stripeHeaders = await headers();
     const signature = stripeHeaders.get('stripe-signature');
 
-    let data;
-    let eventType;
     let event;
 
-    // Verify Stripe event
     try {
+        const body = await req.text(); // Ensure raw body is read for Stripe verification
         event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
     } catch (err) {
-        console.error(`Webhook signature verification failed. ${err.message}`);
-        return NextResponse.json({ error: err.message }, { status: 400 });
+        console.error('Webhook signature verification failed:', err.message);
+        return NextResponse.json({ error: 'Webhook signature verification failed' }, { status: 400 });
     }
 
-    data = event.data;
-    eventType = event.type;
+    const { data, type: eventType } = event;
 
     try {
-        const userCollection = collection(db, 'users'); // Firestore "users" collection
-
         switch (eventType) {
             case 'invoice.payment_succeeded': {
-                const session = await stripe.checkout.sessions.retrieve(data.object.id, {
-                    expand: ['line_items'],
-                });
-                const customerId = session.customer;
+                const invoice = data.object;
+                const customerId = invoice.customer;
+
+                // Retrieve the customer details
                 const customer = await stripe.customers.retrieve(customerId);
-                const priceId = session.line_items?.data[0]?.price.id;
+
                 if (customer.email) {
-
-                    await giveAccessToUser(customer.email)
+                    await giveAccessToUser(customer.email);
+                    console.log(`Access granted for invoice payment succeeded: ${customer.email}`);
                 } else {
-                    throw new Error('No user email found');
+                    throw new Error('Customer email not found for invoice payment.');
                 }
-
                 break;
             }
 
             case 'checkout.session.completed': {
-                const session = await stripe.checkout.sessions.retrieve(data.object.id, {
-                    expand: ['line_items'],
-                });
-                const customerId = session.customer;
-                const customer = await stripe.customers.retrieve(customerId);
-                const priceId = session.line_items?.data[0]?.price.id;
-                if (customer.email) {
-                    await giveAccessToUser(customer.email)
-                } else {
-                    throw new Error('No user email found');
-                }
+                const session = data.object; // Directly use the event's session object
+                const customerEmail = session.customer_email;
 
+                if (customerEmail) {
+                    await giveAccessToUser(customerEmail);
+                }
                 break;
             }
 
             case 'customer.subscription.deleted': {
-                // Extract subscription data from the event
-                const subscription = data.object;
-                const customerId = subscription.customer;
+                const customerId = data.object.customer;
+                const customer = await stripe.customers.retrieve(customerId);
 
-                try {
-                    // Retrieve the customer from Stripe to get their email
-                    const customer = await stripe.customers.retrieve(customerId);
-
-                    if (customer.email) {
-                        // Call a function to revoke access for the user
-                        await revokeAccessFromUser(customer.email);
-                    } else {
-                        throw new Error('No user email found');
-                    }
-                } catch (error) {
-                    console.error('Error revoking access:', error);
+                if (customer.email) {
+                    await revokeAccessFromUser(customer.email);
                 }
-
                 break;
             }
 
-
             default:
-                console.warn('Unhandled event type:', eventType);
+                console.warn(`Unhandled event type: ${eventType}`);
         }
-    } catch (e) {
-        console.error(`Stripe webhook error: ${e.message} | EVENT TYPE: ${eventType}`);
+    } catch (error) {
+        console.error(`Error processing event: ${error.message}`, { eventType });
     }
 
-    return NextResponse.json({});
+    return NextResponse.json({ received: true });
 }
 
-const giveAccessToUser = async (customerEmail) => {
+
+// Helper function to grant access to a user
+async function giveAccessToUser(customerEmail) {
     try {
-        const q = query(
-            collection(db, "users"),
-            where("email", "==", customerEmail)
-        );
+        const userQuery = query(collection(db, "users"), where("email", "==", customerEmail));
+        const querySnapshot = await getDocs(userQuery);
 
-        const querySnapshot = await getDocs(q);
-
-        if (querySnapshot.empty) {
-            console.log("No user found with the provided email.");
-            return;
-        }
-
-        querySnapshot.forEach(async (docSnapshot) => {
-            const userDocRef = doc(db, "users", docSnapshot.id);
-
-            await updateDoc(userDocRef, {
-                hasAccess: true,
+        if (!querySnapshot.empty) {
+            querySnapshot.forEach(async (docSnapshot) => {
+                const userDocRef = doc(db, "users", docSnapshot.id);
+                await updateDoc(userDocRef, { hasAccess: true });
+                console.log(`Access granted to user: ${customerEmail}`);
             });
-
-            console.log(`Updated document ${docSnapshot.id} with hasAccess: true`);
-        });
-
+        } else {
+            console.warn(`No user found for email: ${customerEmail}`);
+        }
     } catch (error) {
-        console.error("Error updating user document:", error);
+        console.error('Error granting access:', error);
     }
-};
+}
 
-
-const revokeAccessFromUser = async (customerEmail) => {
+// Helper function to revoke access from a user
+async function revokeAccessFromUser(customerEmail) {
     try {
-        const q = query(
-            collection(db, "users"),
-            where("email", "==", customerEmail)
-        );
+        const userQuery = query(collection(db, "users"), where("email", "==", customerEmail));
+        const querySnapshot = await getDocs(userQuery);
 
-        const querySnapshot = await getDocs(q);
-
-        if (querySnapshot.empty) {
-            console.log("No user found with the provided email.");
-            return;
-        }
-
-        querySnapshot.forEach(async (docSnapshot) => {
-            const userDocRef = doc(db, "users", docSnapshot.id);
-
-            await updateDoc(userDocRef, {
-                hasAccess: false,
+        if (!querySnapshot.empty) {
+            querySnapshot.forEach(async (docSnapshot) => {
+                const userDocRef = doc(db, "users", docSnapshot.id);
+                await updateDoc(userDocRef, { hasAccess: false });
+                console.log(`Access revoked for user: ${customerEmail}`);
             });
-
-        });
-
+        } else {
+            console.warn(`No user found for email: ${customerEmail}`);
+        }
     } catch (error) {
-        console.error("Error revoking access to user. ", error)
+        console.error('Error revoking access:', error);
     }
 }

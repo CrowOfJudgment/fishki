@@ -7,6 +7,8 @@ import { headers } from "next/headers";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
+export const runtime = "edge";
+
 export async function POST(req) {
     const stripeHeaders = await headers();
     const signature = stripeHeaders.get('stripe-signature');

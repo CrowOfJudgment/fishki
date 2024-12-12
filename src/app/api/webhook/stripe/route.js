@@ -72,6 +72,7 @@ export async function POST(req) {
 }
 
 
+
 // Helper function to grant access to a user
 async function giveAccessToUser(customerEmail) {
     try {

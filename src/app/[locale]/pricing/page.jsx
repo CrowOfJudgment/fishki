@@ -70,10 +70,16 @@ export default function Pricing() {
     };
 
     const handleSubscribe = (planLink) => {
-        const userEmail = user.email;
-        const subscriptionLink = `${planLink}?prefilled_email=${encodeURIComponent(userEmail || '')}`;
-        window.open(subscriptionLink, '_blank'); // Open the link in a new tab
+        const userEmail = user.email || '';
+        const subscriptionLink = `${planLink}?prefilled_email=${encodeURIComponent(userEmail)}`;
+
+        const anchor = document.createElement('a');
+        anchor.href = subscriptionLink;
+        anchor.target = '_blank'; // Open in a new tab
+        anchor.rel = 'noopener noreferrer'; // Optional for security
+        anchor.click(); // Simulate the click
     };
+
 
     const [isYearly, setIsYearly] = useState(false);
 

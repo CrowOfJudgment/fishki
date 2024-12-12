@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import Script from "next/script";
 
+export const runtime = "edge";
+
 export default function Home({ params }) {
     const resolvedParams = React.use(params);
     const [messages, setMessages] = useState(null);

@@ -9,12 +9,14 @@ import { useRouter } from "next/navigation";
 import Link from 'next/link';
 import Toast from "../../../components/Toast";
 import { QRCodeCanvas } from 'qrcode.react';
-import MenuDashboard from "../../../components/MenuDashboard"; // Import QRCodeCanvas
+import MenuDashboard from "../../../components/MenuDashboard";
+import {ButtonCustomerPortal} from "../../../components/ButtonCustomerPortal"; // Import QRCodeCanvas
 
 export const runtime = "edge";
 
 export default function Dashboard() {
     const [user, setUser] = useState(null);
+    const [hasAccess, setHasAccess] = useState(false)
     const qrCodeRef = useRef();
 
     const [tableScanLink, setTableScanLink] = useState("");
@@ -36,6 +38,7 @@ export default function Dashboard() {
                 } else {
                     setUser(currentUser);
                     await fetchRestaurantData(currentUser.uid);
+                    await fetchUserAccess(currentUser.uid)
                 }
             } else {
                 setUser(null);
@@ -45,6 +48,23 @@ export default function Dashboard() {
 
         return () => unsubscribe();
     }, [router]);
+
+    const fetchUserAccess = async (userId) => {
+        try {
+            const userDocRef = doc(db, 'users', userId);
+            const userDocSnap = await getDoc(userDocRef);
+            if (userDocSnap.exists()) {
+                const data = userDocSnap.data();
+                setHasAccess(data.hasAccess || false);
+            }
+        } catch (error) {
+            setToast({
+                visible: true,
+                message: `Error checking user access level. ${error}`,
+                type: "error",
+            });
+        }
+    };
 
     const fetchRestaurantData = async (userId) => {
         try {
@@ -148,25 +168,50 @@ export default function Dashboard() {
 
     return (
         <ProtectedRoute>
-            <div className="flex min-h-screen bg-gray-100 p-6">
+            <div className="flex min-h-screen bg-gray-100 p-6 bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50">
                 {toast.visible && (
                     <Toast
                         message={toast.message}
                         type={toast.type}
-                        onClose={() => setToast({ visible: false, message: '', type: '' })}
+                        onClose={() => setToast({visible: false, message: '', type: ''})}
                     />
                 )}
 
-                <div className="w-full max-w-3xl mx-auto bg-white shadow-md rounded-lg p-8">
-                    <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-2xl font-bold">Edit Your Restaurant Page</h2>
+                {!hasAccess && (
+                    <div
+                        className="fixed top-0 left-0 w-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white flex items-center justify-between px-6 py-4 shadow-lg z-50">
+                        <p className="text-lg font-semibold">Please upgrade your plan to activate your business
+                            page.</p>
+
                         <button
-                            onClick={handleLogout}
-                            className="py-2 px-4 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none"
+                            onClick={() => router.push('/pricing')}
+                            className="px-6 py-2 bg-white text-indigo-600 font-semibold rounded-lg hover:bg-indigo-100 transition-all duration-200 shadow"
                         >
-                            Log Out
+                            See Plans
                         </button>
                     </div>
+                )}
+
+
+                <div className="w-full max-w-3xl mx-auto bg-white shadow-md rounded-lg p-8 mt-[80px]">
+                    <div
+                        className="flex flex-col sm:flex-row items-center justify-between mb-4 space-y-4 sm:space-y-0 sm:space-x-2">
+                        <h2 className="text-2xl font-bold text-center sm:text-left">
+                            Edit Your Restaurant Page
+                        </h2>
+                        <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
+                            <button
+                                onClick={handleLogout}
+                                className="w-full sm:w-auto py-2 px-4 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none text-center"
+                            >
+                                Log Out
+                            </button>
+                            <ButtonCustomerPortal
+                                userEmail={user.email}
+                            />
+                        </div>
+                    </div>
+
 
                     {/* Tabs Navigation */}
                     <div className="border-b mb-6">
@@ -288,7 +333,8 @@ export default function Dashboard() {
                                 </button>
 
                                 {/* Link to Public Page */}
-                                <Link href={`/review/${tableScanLink}`} className="block mt-4 text-blue-500 hover:underline text-center">
+                                <Link href={`/review/${tableScanLink}`}
+                                      className="block mt-4 text-blue-500 hover:underline text-center">
                                     View Public Page
                                 </Link>
                             </div>
@@ -298,7 +344,7 @@ export default function Dashboard() {
                     )}
 
                     {activeTab === 'menu' && (
-                        <MenuDashboard />
+                        <MenuDashboard user={user}/>
                     )}
                 </div>
             </div>

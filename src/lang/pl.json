@@ -10,5 +10,19 @@
   "good-review.good-experience:submit": "Oceń nas na Google",
   "submission.thank-you-title": "Dziękujemy za opinię!",
   "submission.thank-you-message": "Dziękujemy za poświęcenie czasu na podzielenie się swoim doświadczeniem. Przyjrzymy się problemowi tak szybko, jak to możliwe.",
-  "submission.submit-another": "Prześlij kolejną opinię"
+  "submission.submit-another": "Prześlij kolejną opinię",
+  "pricing.monthly": "Miesięczny",
+  "pricing.yearly": "Roczny",
+  "pricing.monthly-plan-title": "Plan miesięczny",
+  "pricing.monthly-plan-description": "Idealny dla firm, które potrzebują elastyczności przy miesięcznych płatnościach.",
+  "pricing.monthly-price": "350",
+  "pricing.yearly-plan-title": "Plan roczny",
+  "pricing.yearly-plan-description": "Zaoszczędź 20% wybierając subskrypcję roczną.",
+  "pricing.yearly-price": "3360",
+  "pricing.year": "/rok",
+  "pricing.month": "/miesiąc",
+  "pricing.unlimited-access": "✔ Nieograniczony dostęp do wszystkich funkcji",
+  "pricing.priority-support": "✔ Priorytetowe wsparcie",
+  "pricing.free-updates": "✔ Darmowe aktualizacje",
+  "pricing.choose-plan": "Wybierz plan"
 }

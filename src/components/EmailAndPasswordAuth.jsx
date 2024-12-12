@@ -58,7 +58,7 @@ export default function EmailAndPasswordAuth() {
                 </div>
                 <div className="flex justify-center mt-4">
                     <p className="text-sm text-gray-600">
-                        Don't have an account?{" "}
+                        Dont have an account?{" "}
                         <button
                             onClick={redirectToSignUp}
                             className="text-indigo-500 font-semibold hover:underline"

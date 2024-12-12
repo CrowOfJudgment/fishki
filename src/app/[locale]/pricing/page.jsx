@@ -8,6 +8,7 @@ import {useRouter} from "next/navigation";
 import {onAuthStateChanged} from "firebase/auth";
 import {auth, app, payments} from "../../../lib/firebaseConfig";
 import {createCheckoutSession} from "@invertase/firestore-stripe-payments";
+import Link from "next/link";
 
 export const runtime = "edge";
 
@@ -108,12 +109,12 @@ export default function Pricing() {
                         </div>
 
                         {/* Link to Dashboard */}
-                        <a
+                        <Link
                             href="/dashboard"
                             className="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all duration-200 shadow"
                         >
                             Go to Dashboard
-                        </a>
+                        </Link>
                     </div>
 
                     {/* Pricing Card */}

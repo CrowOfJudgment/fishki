@@ -3,6 +3,7 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import {auth, db} from '../lib/firebaseConfig';
 import {onAuthStateChanged} from "firebase/auth";
 import {useRouter} from "next/navigation";
+import Image from "next/image";
 
 const AdminDashboard = ({ tableScanLink }) => {
     const [user, setUser] = useState(null);
@@ -13,7 +14,7 @@ const AdminDashboard = ({ tableScanLink }) => {
     const [error, setError] = useState(null);
     const router = useRouter()
 
-    const fetchData = async () => {
+    const fetchData = React.useCallback(async () => {
         if (!tableScanLink) {
             setError('Table scan link is required.');
             setLoading(false);
@@ -54,7 +55,7 @@ const AdminDashboard = ({ tableScanLink }) => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [tableScanLink]);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
@@ -63,7 +64,7 @@ const AdminDashboard = ({ tableScanLink }) => {
                     router.push('/signup');
                 } else {
                     setUser(currentUser);
-                    await fetchData()
+                    await fetchData();
                 }
             } else {
                 setUser(null);
@@ -72,7 +73,8 @@ const AdminDashboard = ({ tableScanLink }) => {
         });
 
         return () => unsubscribe();
-    }, [router]);
+    }, [router, fetchData]);
+
 
     const goodReviewCount = goodReviews.length;
     const qrScanCount = qrScans.length;
@@ -105,32 +107,28 @@ const AdminDashboard = ({ tableScanLink }) => {
 
             <div className="bg-white shadow rounded-lg p-6">
                 <h2 className="text-xl font-bold">Complaints</h2>
-                {complaints.length === 0 ? (
-                    <p>No complaints found for this table scan link.</p>
-                ) : (
-                    <ul className="space-y-4">
-                        {complaints.map((complaint, index) => (
-                            <li key={index} className="border-b pb-4 mb-4">
-                                <p><strong>User:</strong> {complaint.userName}</p>
-                                <p><strong>Phone:</strong> {complaint.phoneNumber}</p>
-                                <p><strong>Rating:</strong> {complaint.rating}</p>
-                                <p><strong>Description:</strong> {complaint.complaintDescription}</p>
-                                {complaint.imageUrl && (
-                                    <div className="mt-2">
-                                        <img
-                                            src={complaint.imageUrl}
-                                            alt="Complaint related"
-                                            className="max-w-full h-auto rounded-lg"
-                                        />
-                                    </div>
-                                )}
-                                <p className="text-sm text-gray-500 mt-2">
-                                    Date: {complaint.date} | Time: {complaint.time}
-                                </p>
-                            </li>
-                        ))}
-                    </ul>
-                )}
+                {complaints.map((complaint, index) => (
+                    <li key={index} className="border-b pb-4 mb-4">
+                        <p><strong>User:</strong> {complaint.userName}</p>
+                        <p><strong>Phone:</strong> {complaint.phoneNumber}</p>
+                        <p><strong>Rating:</strong> {complaint.rating}</p>
+                        <p><strong>Description:</strong> {complaint.complaintDescription}</p>
+                        {complaint.imageUrl && (
+                            <div className="mt-2">
+                                <Image
+                                    src={complaint.imageUrl}
+                                    alt="Complaint related"
+                                    width={600} // Replace with your desired width
+                                    height={400} // Replace with your desired height
+                                    className="rounded-lg"
+                                />
+                            </div>
+                        )}
+                        <p className="text-sm text-gray-500 mt-2">
+                            Date: {complaint.date} | Time: {complaint.time}
+                        </p>
+                    </li>
+                ))}
             </div>
         </div>
     );

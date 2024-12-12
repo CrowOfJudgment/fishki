@@ -10,7 +10,8 @@ import Link from 'next/link';
 import Toast from "../../../components/Toast";
 import { QRCodeCanvas } from 'qrcode.react';
 import MenuDashboard from "../../../components/MenuDashboard";
-import {ButtonCustomerPortal} from "../../../components/ButtonCustomerPortal"; // Import QRCodeCanvas
+import {ButtonCustomerPortal} from "../../../components/ButtonCustomerPortal";
+import AdminDashboard from "../../../components/AdminDashboard"; // Import QRCodeCanvas
 
 export const runtime = "edge";
 
@@ -210,6 +211,7 @@ export default function Dashboard() {
                                 userEmail={user.email}
                             />
                         </div>
+
                     </div>
 
 
@@ -226,6 +228,12 @@ export default function Dashboard() {
                             className={`py-2 px-4 ${activeTab === 'menu' ? 'border-b-2 border-blue-600 font-bold' : 'text-gray-600'}`}
                         >
                             Menu
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('admin')}
+                            className={`py-2 px-4 ${activeTab === 'admin' ? 'border-b-2 border-blue-600 font-bold' : 'text-gray-600'}`}
+                        >
+                            Admin
                         </button>
                     </div>
 
@@ -345,6 +353,10 @@ export default function Dashboard() {
 
                     {activeTab === 'menu' && (
                         <MenuDashboard user={user}/>
+                    )}
+
+                    {activeTab === 'admin' && (
+                        <AdminDashboard tableScanLink={tableScanLink}/>
                     )}
                 </div>
             </div>

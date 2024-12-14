@@ -16,7 +16,7 @@ const plans = [
     {
         title: 'Monthly Plan',
         description: 'Ideal for businesses that need flexibility with monthly payments.',
-        link: process.env.NODE_ENV === 'development' ? 'https://buy.stripe.com/test_bIY9CC6VRdabbT29AA' : 'https://buy.stripe.com/14k3cId6U2yG7kY28b',
+        link: process.env.NODE_ENV === 'development' ? 'https://buy.stripe.com/test_bIY9CC6VRdabbT29AA' : 'https://buy.stripe.com/8wM14Aff2c9g0WA000',
         priceId: process.env.NODE_ENV === 'development' ? 'price_1QM7PGGdy48dKxUYziPmxNb5' : '',
         price: 120,
         duration: '/month'

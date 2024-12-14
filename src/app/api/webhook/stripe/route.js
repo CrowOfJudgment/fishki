@@ -12,7 +12,7 @@ export const runtime = "edge";
 export async function POST(req) {
     const stripeHeaders = await headers();
     const signature = stripeHeaders.get('stripe-signature');
-
+    console.log("Stripe headers: ", stripeHeaders)
     let event;
 
     try {
@@ -24,7 +24,9 @@ export async function POST(req) {
     }
 
     const { data, type: eventType } = event;
-
+    console.log("my webhook: ", webhookSecret)
+    console.log("data: ", data)
+    console.log("eventType: ", eventType)
     try {
         switch (eventType) {
             case 'invoice.payment_succeeded': {

@@ -1,6 +1,7 @@
 import SocialX from "../assets/social-x.svg";
 import SocialLinkedIn from "../assets/social-linkedin.svg";
 import React from "react";
+import Link from "next/link";
 
 export const runtime = "edge";
 
@@ -19,7 +20,7 @@ export const Footer = () => {
         <nav className="flex flex-col md:flex-row md:justify-center gap-6 mt-6">
           <a href="#showcase">About</a>
           <a href="#pricing">Pricing</a>
-          <a href="#contact">Help</a>
+          <Link href="/contact">Help</Link>
         </nav>
         <div className="flex justify-center gap-6 mt-6">
           <a href="https://x.com/Yussuf_Nergiz" target="_blank" rel="noopener noreferrer">

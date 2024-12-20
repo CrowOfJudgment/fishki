@@ -6,6 +6,7 @@ import styles from './contact-form-.module.css'
 import {i18n} from "../../../../i18n-config";
 import {useRouter} from "next/navigation";
 import {getIntl} from "../../../lib/intl";
+export const runtime = "edge";
 
 export default function ContactForm() {
     const formRef = useRef<HTMLFormElement>(null)

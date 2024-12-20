@@ -1,19 +1,8 @@
-// app/layout.js
-import localFont from 'next/font/local';
 import './globals.css';
+import {twMerge} from "tailwind-merge";
+import { DM_Sans } from "next/font/google";
 
-const geistSans = localFont({
-    src: './fonts/GeistVF.woff',
-    variable: '--font-geist-sans',
-    weight: '100 900',
-    display: 'swap', // Ensure fonts load consistently across SSR and CSR.
-});
-const geistMono = localFont({
-    src: './fonts/GeistMonoVF.woff',
-    variable: '--font-geist-mono',
-    weight: '100 900',
-    display: 'swap',
-});
+const dmSans = DM_Sans({ subsets: ["latin"] });
 
 export const metadata = {
     title: 'TableScan',
@@ -23,7 +12,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <body className={twMerge(dmSans.className, "antialiased bg-[#EAEEFE]")}>
                 {children}
             </body>
         </html>

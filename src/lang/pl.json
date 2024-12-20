@@ -51,5 +51,13 @@
   "cta.title": "Zarejestruj się już dziś",
   "cta.subtitle": "Nawiązuj trwałe relacje i ulepszaj swoje relacje z klientami.",
   "cta.getNow": "Rozpocznij teraz",
-  "cta.learnMore": "Dowiedz się więcej"
+  "cta.learnMore": "Dowiedz się więcej",
+  "contact.getInTouch": "Skontaktuj się!",
+  "contact.subtitle": "Chcielibyśmy usłyszeć od Ciebie!",
+  "contact.name": "Imię",
+  "contact.email": "Email",
+  "contact.message": "Wiadomość",
+  "contact.success": "Wiadomość została wysłana pomyślnie!",
+  "contact.sendMessage": "Wyślij wiadomość",
+  "contact.sending": "Wysyłanie..."
 }

@@ -51,5 +51,13 @@
   "cta.title": "Sign up today",
   "cta.subtitle": "Build stronger, more meaningful connections with your customers today.",
   "cta.getNow": "Get now",
-  "cta.learnMore": "Learn more"
+  "cta.learnMore": "Learn more",
+  "contact.getInTouch": "Get in touch!",
+  "contact.subtitle": "We'd love to hear from you!",
+  "contact.name": "Name",
+  "contact.email": "Email",
+  "contact.message": "Message",
+  "contact.success": "Message sent successfully!",
+  "contact.sendMessage": "Send message",
+  "contact.sending": "Sending...."
 }

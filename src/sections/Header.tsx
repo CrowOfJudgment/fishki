@@ -5,6 +5,7 @@ import { getIntl } from "../lib/intl";
 import { useRouter } from "next/navigation";
 import {onAuthStateChanged} from "firebase/auth";
 import {auth} from "@/lib/firebaseConfig";
+import Link from "next/link";
 
 export const runtime = "edge";
 
@@ -90,7 +91,7 @@ export const Header = ({ locale, onLocaleChange, intl }) => {
                   {/* Navigation Links */}
                   <a href="#showcase">{intl.formatMessage({ id: "header.about" })}</a>
                   <a href="#pricing">{intl.formatMessage({ id: "header.pricing" })}</a>
-                  <a href="#contact">{intl.formatMessage({ id: "header.help" })}</a>
+                  <Link href="/contact">{intl.formatMessage({ id: "header.help" })}</Link>
 
                   {/* Get for Free Button */}
                   <button className="bg-black text-white px-4 py-2 rounded-lg font-medium inline-flex items-center"

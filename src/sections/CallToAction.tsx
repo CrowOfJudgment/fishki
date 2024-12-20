@@ -5,6 +5,7 @@ import chefRight from "../assets/chefRight.png";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import {useRouter} from "next/navigation";
+import Link from "next/link";
 
 export const runtime = "edge";
 
@@ -53,7 +54,7 @@ export const CallToAction = ({ intl }) => {
         <div className="flex gap-2 mt-10 justify-center">
           <button className="btn btn-primary" onClick={() => router.push('/signup')}>{intl.formatMessage({ id: "cta.getNow" })}</button>
           <button className="btn btn-text gap-1">
-            <span>{intl.formatMessage({ id: "cta.learnMore" })}</span>
+            <Link href={'/contact'}>{intl.formatMessage({ id: "cta.learnMore" })}</Link>
             <ArrowRight className="h-5 w-5" />
           </button>
         </div>

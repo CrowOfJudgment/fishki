@@ -42,7 +42,7 @@ export const Hero = ({ intl }) => {
             <div className="flex gap-1 items-center mt-[30px]">
               <Link href={'/signup'} className="btn btn-primary">{intl.formatMessage({ id: "hero.cta" })}</Link>
               <button className="btn btn-text gap-1">
-                <span>{intl.formatMessage({ id: "hero.learnMore" })}</span>
+                <Link href={'/contact'}>{intl.formatMessage({ id: "hero.learnMore" })}</Link>
                 <ArrowIcon className="h-5 w-5" />
               </button>
             </div>

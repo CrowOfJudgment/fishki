@@ -53,20 +53,6 @@ export default function Home({ params }) {
             <Pricing intl={intl}/>
             {/*<Testimonials />*/}
             <CallToAction intl={intl}/>
-            {/*<div>*/}
-            {/*    /!* Calendly Inline Widget *!/*/}
-            {/*    <div*/}
-            {/*        className="calendly-inline-widget"*/}
-            {/*        data-url="https://calendly.com/tablescan-saas"*/}
-            {/*        style={{minWidth: '320px', height: '700px'}}*/}
-            {/*    ></div>*/}
-
-            {/*    /!* Calendly Script *!/*/}
-            {/*    <Script*/}
-            {/*        src="https://assets.calendly.com/assets/external/widget.js"*/}
-            {/*        strategy="lazyOnload"*/}
-            {/*    />*/}
-            {/*</div>*/}
             <Footer/>
         </>
     );

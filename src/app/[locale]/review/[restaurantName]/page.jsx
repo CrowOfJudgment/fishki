@@ -5,24 +5,23 @@ import { useRouter, useParams } from 'next/navigation';
 import { db, storage } from '../../../../lib/firebaseConfig';
 import { collection, query, where, getDocs, addDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import NotFoundPage from "@/components/NotFoundPage";
-import StarRating from '@/components/StarRating';
-import GoogleReviewPrompt from '@/components/GoogleReviewPrompt';
-import ComplaintForm from '@/components/ComplaintForm';
-import SubmissionConfirmation from '@/components/SubmissionConfirmation';
-import Toast from '@/components/Toast';
+import NotFoundPage from "../../../../components/NotFoundPage";
+import StarRating from '../../../../components/StarRating';
+import GoogleReviewPrompt from '../../../../components/GoogleReviewPrompt';
+import ComplaintForm from '../../../../components/ComplaintForm';
+import SubmissionConfirmation from '../../../../components/SubmissionConfirmation';
+import Toast from '../../../../components/Toast';
 import { i18n } from '../../../../../i18n-config';
 import { getIntl } from '../../../../lib/intl';
-import Image from 'next/image'; // Import Next.js Image component
-import bgImage from '../../../../images/ORFF0J0.jpg'
 import PageUnavailable from "../../../../components/PageUnavailable";
-import {setRestaurantIsEnabled} from "../../../../lib/helper-functions";
+import { setRestaurantIsEnabled } from "../../../../lib/helper-functions";
+import { Testimonials } from '../../../../sections/Testimonials'; // Import the Testimonials component for background
 
 export const runtime = "edge";
 
 export default function RestaurantRatingPage() {
     const { restaurantName } = useParams();
-    const [isEnabled, setIsEnabled] = useState(false)
+    const [isEnabled, setIsEnabled] = useState(false);
     const [restaurantTitle, setRestaurantTitle] = useState("");
     const [description, setDescription] = useState('');
     const [ratingPrompt, setRatingPrompt] = useState('Please rate our service');
@@ -74,7 +73,7 @@ export default function RestaurantRatingPage() {
                     setRestaurantTitle(data.restaurantName);
                     setGoogleReviewLink(data.googleReviewLink || '');
                     setIsNotFound(false);
-                    setIsEnabled(await setRestaurantIsEnabled(data.userId))
+                    setIsEnabled(await setRestaurantIsEnabled(data.userId));
                 } else {
                     setIsNotFound(true);
                 }
@@ -87,8 +86,6 @@ export default function RestaurantRatingPage() {
 
         fetchRestaurantData();
     }, [restaurantName, locale]);
-
-
 
     const handleRating = (selectedRating) => {
         setRating(selectedRating);
@@ -183,18 +180,11 @@ export default function RestaurantRatingPage() {
     if (isEnabled) {
         return (
             <div className="relative min-h-screen w-full">
-                <div className="fixed top-0 left-0 w-screen h-screen z-[-10]">
-                    <Image
-                        src={bgImage}  // Replace with your image path
-                        alt="Background Image"
-                        layout="fill"
-                        objectFit="cover"
-                        quality={100}
-                        className="filter blur-[1px] scale-[1.1] object-cover"
-                    />
+                <div className="absolute top-0 left-0 w-full h-full z-[-10]">
+                    <Testimonials />
                 </div>
 
-                <div className="absolute top-0 left-0 right-0 bottom-0 bg-black bg-opacity-40 backdrop-blur-sm z-[-5]"/>
+                <div className="absolute top-0 left-0 right-0 bottom-0 bg-black bg-opacity-40 backdrop-blur-sm z-[-5]" />
 
                 <div className="flex items-center justify-center min-h-screen p-4 relative z-10">
                     <button
@@ -208,7 +198,7 @@ export default function RestaurantRatingPage() {
                         <Toast
                             message={toast.message}
                             type={toast.type}
-                            onClose={() => setToast({visible: false, message: '', type: ''})}
+                            onClose={() => setToast({ visible: false, message: '', type: '' })}
                         />
                     )}
 
@@ -217,10 +207,10 @@ export default function RestaurantRatingPage() {
                         <p className="text-gray-600 mb-6">{description}</p>
 
                         <h2 className="text-xl font-semibold mb-2">{ratingPrompt}</h2>
-                        <StarRating rating={rating} handleRating={handleRating}/>
+                        <StarRating rating={rating} handleRating={handleRating} />
 
                         {submitted ? (
-                            <SubmissionConfirmation onReset={resetForm} intl={intl}/>
+                            <SubmissionConfirmation onReset={resetForm} intl={intl} />
                         ) : (
                             <>
                                 {showGoogleReviewPrompt && (
@@ -241,10 +231,7 @@ export default function RestaurantRatingPage() {
                 </div>
             </div>
         );
-    }
-    else {
-        return (
-            <PageUnavailable />
-        )
+    } else {
+        return <PageUnavailable />;
     }
 }

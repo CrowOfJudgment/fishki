@@ -3,7 +3,7 @@
 import ProtectedRoute from "../../../components/ProtectedRoute";
 import { useEffect, useRef, useState } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { auth, db } from "../../../lib/firebaseConfig";
+import {auth, db, storage} from "../../../lib/firebaseConfig";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import Link from 'next/link';
@@ -11,13 +11,16 @@ import Toast from "../../../components/Toast";
 import { QRCodeCanvas } from 'qrcode.react';
 import MenuDashboard from "../../../components/MenuDashboard";
 import {ButtonCustomerPortal} from "../../../components/ButtonCustomerPortal";
-import AdminDashboard from "../../../components/AdminDashboard"; // Import QRCodeCanvas
+import AdminDashboard from "../../../components/AdminDashboard";
+import Image from "next/image";
+import {getDownloadURL, ref, uploadBytes} from "firebase/storage"; // Import QRCodeCanvas
 
 export const runtime = "edge";
 
 export default function Dashboard() {
     const [user, setUser] = useState(null);
     const [hasAccess, setHasAccess] = useState(false)
+    const [loading, setLoading] = useState(false);
     const qrCodeRef = useRef();
 
     const [tableScanLink, setTableScanLink] = useState("");
@@ -30,6 +33,10 @@ export default function Dashboard() {
     const [toast, setToast] = useState({ visible: false, message: '', type: '' });
     const [activeTab, setActiveTab] = useState('reviews'); // State for tab navigation
     const router = useRouter();
+    const [imageFile, setImageFile] = useState('');
+    const [imagePreview, setImagePreview] = useState('');
+    const [color, setColor] = useState("#7a95ff"); // Default color
+    const [savedImageUrl, setSavedImageUrl] = useState('')
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
@@ -51,6 +58,7 @@ export default function Dashboard() {
     }, [router]);
 
     const fetchUserAccess = async (userId) => {
+        setLoading(true)
         try {
             const userDocRef = doc(db, 'users', userId);
             const userDocSnap = await getDoc(userDocRef);
@@ -65,9 +73,13 @@ export default function Dashboard() {
                 type: "error",
             });
         }
+        finally {
+            setLoading(false)
+        }
     };
 
     const fetchRestaurantData = async (userId) => {
+        setLoading(true); // Set loading to true at the start of the function
         try {
             const docRef = doc(db, 'restaurants', userId);
             const docSnap = await getDoc(docRef);
@@ -78,6 +90,9 @@ export default function Dashboard() {
                 setDescription(data.description || '');
                 setDescriptionPL(data.description_pl || ''); // Set Polish description
                 setRatingPrompt(data.ratingPrompt || 'Please rate our service');
+                setSavedImageUrl(data.imageUrl || '');
+                setColor(data.themeColor || '#7a95ff');
+                setImagePreview(data.imageUrl || '');
                 setRatingPromptPL(data.ratingPrompt_pl || ''); // Set Polish Rating Prompt
                 setGoogleReviewLink(data.googleReviewLink || '');
             }
@@ -87,13 +102,26 @@ export default function Dashboard() {
                 message: "Error fetching restaurant data.",
                 type: "error",
             });
+        } finally {
+            setLoading(false); // Set loading to false once the data has been loaded or an error occurs
         }
     };
+
 
     const handleSave = async () => {
         if (!user) return;
 
         try {
+            let imageUrl = savedImageUrl; // Default to the fetched image URL
+
+            // If a new image is uploaded, save it and update the URL
+            if (imageFile) {
+                const imageRef = ref(storage, `logo/${tableScanLink}/${imageFile.name}`);
+                await uploadBytes(imageRef, imageFile);
+                imageUrl = await getDownloadURL(imageRef);
+                setSavedImageUrl(imageUrl); // Update the saved image URL state
+            }
+
             const docRef = doc(db, 'restaurants', user.uid);
             await setDoc(docRef, {
                 userId: user.uid,
@@ -102,7 +130,9 @@ export default function Dashboard() {
                 description_pl, // Save Polish description
                 ratingPrompt,
                 ratingPrompt_pl,
-                googleReviewLink
+                googleReviewLink,
+                imageUrl, // Use either the new image URL or the fetched one
+                themeColor: color,
             }, { merge: true });
 
             setToast({
@@ -118,6 +148,7 @@ export default function Dashboard() {
             });
         }
     };
+
 
     const handleDownloadQRCode = () => {
         const canvas = qrCodeRef.current.querySelector("canvas");
@@ -165,7 +196,32 @@ export default function Dashboard() {
         }
     };
 
-    if (!user) return <div>Loading...</div>;
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setImageFile(file);
+            setImagePreview(URL.createObjectURL(file)); // Display a preview of the new image
+        }
+    };
+
+
+    const handleColorChange = (e) => {
+        setColor(e.target.value);
+    };
+
+    if (!user) return (
+        <div className="flex items-center justify-center min-h-screen bg-gray-100">
+            <div className="text-gray-700 text-xl">Loading...</div>
+        </div>
+    );
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center min-h-screen bg-gray-100">
+                <div className="text-gray-700 text-xl">Loading...</div>
+            </div>
+        )
+    }
 
     return (
         <ProtectedRoute>
@@ -249,6 +305,72 @@ export default function Dashboard() {
                                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     placeholder="Enter your restaurant name"
                                 />
+                            </div>
+
+                            <div className="mb-3">
+                                <label className="block text-gray-600 mb-2">
+                                    Restaurant Logo
+                                </label>
+                                <div className="flex items-center space-x-3">
+                                    <button
+                                        type="button"
+                                        onClick={() => document.getElementById('fileInput').click()}
+                                        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                                    >
+                                        Choose image
+                                    </button>
+                                    <input
+                                        type="file"
+                                        id="fileInput"
+                                        accept="image/*"
+                                        onChange={handleImageChange}
+                                        className="hidden"
+                                    />
+                                </div>
+                                {imagePreview !== '' && (
+                                    <div className="mt-3">
+                                        <Image
+                                            src={imagePreview}
+                                            alt="Image preview"
+                                            width={128}
+                                            height={128}
+                                            className="object-cover rounded-lg shadow-md"
+                                        />
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="mb-3">
+                                <label className="block text-gray-700 font-bold mb-2">
+                                    Select a Color
+                                </label>
+
+                                {/* Color Picker Input */}
+                                <div className="flex items-center space-x-4">
+                                    <input
+                                        type="color"
+                                        value={color}
+                                        onChange={handleColorChange}
+                                        className="w-12 h-12 border-none cursor-pointer"
+                                    />
+
+                                    {/* Text Input for Hex Code */}
+                                    <input
+                                        type="text"
+                                        value={color}
+                                        onChange={handleColorChange}
+                                        className="border rounded px-2 py-1 text-gray-800 focus:ring focus:outline-none"
+                                        placeholder="#000000"
+                                    />
+                                </div>
+
+                                {/* Preview Section */}
+                                <div
+                                    className="mt-4 w-32 h-32 rounded shadow-md"
+                                    style={{backgroundColor: color}}
+                                >
+                                    {/* Preview Box */}
+                                </div>
                             </div>
 
                             <div className="mb-4">

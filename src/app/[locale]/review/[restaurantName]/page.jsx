@@ -15,7 +15,8 @@ import { i18n } from '../../../../../i18n-config';
 import { getIntl } from '../../../../lib/intl';
 import PageUnavailable from "../../../../components/PageUnavailable";
 import { setRestaurantIsEnabled } from "../../../../lib/helper-functions";
-import { Testimonials } from '../../../../sections/Testimonials'; // Import the Testimonials component for background
+import { Testimonials } from '../../../../sections/Testimonials';
+import Image from "next/image"; // Import the Testimonials component for background
 
 export const runtime = "edge";
 
@@ -31,10 +32,12 @@ export default function RestaurantRatingPage() {
     const [showGoogleReviewPrompt, setShowGoogleReviewPrompt] = useState(false);
     const [showComplaintForm, setShowComplaintForm] = useState(false);
     const [googleReviewLink, setGoogleReviewLink] = useState('');
+    const [themeColor, setThemeColor] = useState('');
     const [toast, setToast] = useState({ visible: false, message: '', type: '' });
     const [locale, setLocale] = useState(i18n.defaultLocale);
     const [intl, setIntl] = useState(null);
     const [submitted, setSubmitted] = useState(false);
+    const [logoUrl, setLogoUrl] = useState('')
 
     const router = useRouter();
 
@@ -71,6 +74,8 @@ export default function RestaurantRatingPage() {
                     setDescription(locale === 'en' ? data.description : data.description_pl);
                     setRatingPrompt(locale === 'en' ? data.ratingPrompt : data.ratingPrompt_pl);
                     setRestaurantTitle(data.restaurantName);
+                    setLogoUrl(data.imageUrl || '');
+                    setThemeColor(data.themeColor || '');
                     setGoogleReviewLink(data.googleReviewLink || '');
                     setIsNotFound(false);
                     setIsEnabled(await setRestaurantIsEnabled(data.userId));
@@ -202,15 +207,31 @@ export default function RestaurantRatingPage() {
                         />
                     )}
 
-                    <div className="max-w-md w-full bg-white shadow-lg rounded-lg p-6 text-center">
+                    <div className="max-w-md w-full bg-white shadow-lg rounded-lg p-6 text-center relative">
+
+                        <div
+                            className="absolute top-0 left-0 h-12 w-12 bg-primary transform rotate-45 -translate-y-6 -translate-x-6"
+                            style={{backgroundColor: themeColor}}
+                        />
+
+                        {logoUrl && (
+                            <Image
+                                src={logoUrl}
+                                alt={`${restaurantTitle} logo`}
+                                width={64}
+                                height={64}
+                                className="mx-auto mb-4 rounded-full"
+                            />
+                        )}
+
                         <h1 className="text-3xl font-bold mb-4">{restaurantTitle}</h1>
                         <p className="text-gray-600 mb-6">{description}</p>
 
                         <h2 className="text-xl font-semibold mb-2">{ratingPrompt}</h2>
-                        <StarRating rating={rating} handleRating={handleRating} />
+                        <StarRating rating={rating} handleRating={handleRating}/>
 
                         {submitted ? (
-                            <SubmissionConfirmation onReset={resetForm} intl={intl} />
+                            <SubmissionConfirmation onReset={resetForm} intl={intl}/>
                         ) : (
                             <>
                                 {showGoogleReviewPrompt && (
@@ -232,6 +253,6 @@ export default function RestaurantRatingPage() {
             </div>
         );
     } else {
-        return <PageUnavailable />;
+        return <PageUnavailable/>;
     }
 }

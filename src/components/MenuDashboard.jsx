@@ -1,16 +1,15 @@
-'use client';
+"use client";
 
 import { useEffect, useState } from "react";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { onAuthStateChanged } from "firebase/auth";
 import Link from "next/link";
 import Toast from "./Toast";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Import for Firebase Storage
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db, storage, auth } from '../lib/firebaseConfig';
 
 export default function MenuDashboard({ user }) {
-    // const [user, setUser] = useState(null);
     const [foodName, setFoodName] = useState('');
     const [name_pl, setFoodNamePl] = useState('');
     const [description, setDescription] = useState('');
@@ -22,7 +21,7 @@ export default function MenuDashboard({ user }) {
     const [isKosher, setIsKosher] = useState(false);
     const [foodImage, setFoodImage] = useState(null);
     const [tableScanLink, setTableScanLink] = useState('');
-    const [hasAccess, setHasAccess] = useState(false)
+    const [menuItems, setMenuItems] = useState([]);
     const [toast, setToast] = useState({ visible: false, message: '', type: '' });
 
     const router = useRouter();
@@ -33,11 +32,9 @@ export default function MenuDashboard({ user }) {
                 if (!currentUser.emailVerified) {
                     router.push('/signup');
                 } else {
-                    // setUser(currentUser);
-                    await fetchRestaurantData(currentUser.uid);
+                    await fetchMenuItems(currentUser.uid);
                 }
             } else {
-                // setUser(null);
                 router.push('/login');
             }
         });
@@ -45,19 +42,19 @@ export default function MenuDashboard({ user }) {
         return () => unsubscribe();
     }, [router]);
 
-    const fetchRestaurantData = async (userId) => {
+    const fetchMenuItems = async (userId) => {
         try {
-            const docRef = doc(db, 'restaurants', userId);
-            const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) {
-                const data = docSnap.data();
+            const menuRef = doc(db, "menus", userId);
+            const menuSnap = await getDoc(menuRef);
+            if (menuSnap.exists()) {
+                const data = menuSnap.data();
+                setMenuItems(data.items || []);
                 setTableScanLink(data.tableScanLink || '');
-                setHasAccess(data.hasAccess || false)
             }
         } catch (error) {
             setToast({
                 visible: true,
-                message: "Error fetching restaurant data.",
+                message: "Error fetching menu items.",
                 type: "error",
             });
         }
@@ -76,49 +73,38 @@ export default function MenuDashboard({ user }) {
         try {
             let imageUrl = null;
 
-            // Upload the image to Firebase Storage if it exists
             if (foodImage) {
                 const storageRef = ref(
                     storage,
                     `menuImages/${user.uid}/${Date.now()}_${foodImage.name}`
                 );
                 const uploadSnapshot = await uploadBytes(storageRef, foodImage);
-                imageUrl = await getDownloadURL(uploadSnapshot.ref); // Get the download URL
+                imageUrl = await getDownloadURL(uploadSnapshot.ref);
             }
 
-            // Prepare the new item with both English and Polish translations
             const newItem = {
                 name: foodName,
-                name_pl: name_pl, // Store the Polish name
+                name_pl,
                 description,
-                description_pl, // Store the Polish description
+                description_pl,
                 price: parseFloat(price),
                 isVegan,
                 isVegetarian,
                 isHalal,
                 isKosher,
-                image: imageUrl, // Use the permanent URL from Firebase Storage
+                image: imageUrl,
             };
 
             const menuRef = doc(db, "menus", user.uid);
-            const menuSnap = await getDoc(menuRef);
+            const updatedItems = [...menuItems, newItem];
 
-            let updatedItems = [];
-            if (menuSnap.exists()) {
-                const data = menuSnap.data();
-                updatedItems = [...(data.items || []), newItem];
-            } else {
-                updatedItems = [newItem];
-            }
-
-            // Save or update the menu in Firestore
             await setDoc(
                 menuRef,
-                { tableScanLink: tableScanLink, items: updatedItems, hasAccess: hasAccess, userId: user.uid },
+                { items: updatedItems },
                 { merge: true }
             );
 
-            // Clear input fields
+            setMenuItems(updatedItems);
             setFoodName('');
             setFoodNamePl('');
             setDescription('');
@@ -140,6 +126,30 @@ export default function MenuDashboard({ user }) {
             setToast({
                 visible: true,
                 message: "Error saving menu item.",
+                type: "error",
+            });
+        }
+    };
+
+    const handleRemoveItem = async (index) => {
+        try {
+            const updatedItems = menuItems.filter((_, i) => i !== index);
+            const menuRef = doc(db, "menus", user.uid);
+
+            await updateDoc(menuRef, { items: updatedItems });
+
+            setMenuItems(updatedItems);
+
+            setToast({
+                visible: true,
+                message: "Food item removed successfully.",
+                type: "success",
+            });
+        } catch (error) {
+            console.error("Error removing menu item:", error);
+            setToast({
+                visible: true,
+                message: "Error removing menu item.",
                 type: "error",
             });
         }
@@ -275,6 +285,24 @@ export default function MenuDashboard({ user }) {
             >
                 Add Food Item
             </button>
+
+            <h3 className="text-xl font-semibold mt-6">Current Menu Items</h3>
+            <ul className="mt-4">
+                {menuItems.map((item, index) => (
+                    <li key={index} className="flex justify-between items-center border-b py-2">
+                        <div>
+                            <p className="font-semibold">{item.name}</p>
+                            <p className="text-sm text-gray-500">{item.description}</p>
+                        </div>
+                        <button
+                            onClick={() => handleRemoveItem(index)}
+                            className="text-red-500 hover:underline"
+                        >
+                            Remove
+                        </button>
+                    </li>
+                ))}
+            </ul>
 
             {/* Link to Public Page */}
             <Link href={`/menu/${tableScanLink}`} className="block mt-4 text-blue-500 hover:underline text-center">

@@ -5,10 +5,10 @@ import { useRouter, useParams } from "next/navigation";
 import { db } from "../../../../lib/firebaseConfig";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import Image from "next/image";
-import { i18n } from "../../../../../i18n-config"; // Import i18n config
+import { i18n } from "../../../../../i18n-config";
 import { getIntl } from "../../../../lib/intl";
 import {setRestaurantIsEnabled} from "../../../../lib/helper-functions";
-import PageUnavailable from "../../../../components/PageUnavailable"; // Load localized strings
+import PageUnavailable from "../../../../components/PageUnavailable";
 
 export const runtime = "edge";
 

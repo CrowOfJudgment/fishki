@@ -21,6 +21,7 @@ export default function MenuDashboard({ user }) {
     const [isKosher, setIsKosher] = useState(false);
     const [foodImage, setFoodImage] = useState(null);
     const [tableScanLink, setTableScanLink] = useState('');
+    const [hasAccess, setHasAccess] = useState(false);
     const [menuItems, setMenuItems] = useState([]);
     const [toast, setToast] = useState({ visible: false, message: '', type: '' });
 
@@ -33,6 +34,7 @@ export default function MenuDashboard({ user }) {
                     router.push('/signup');
                 } else {
                     await fetchMenuItems(currentUser.uid);
+                    await fetchRestaurantData(currentUser.uid)
                 }
             } else {
                 router.push('/login');
@@ -42,6 +44,24 @@ export default function MenuDashboard({ user }) {
         return () => unsubscribe();
     }, [router]);
 
+    const   fetchRestaurantData = async (userId) => {
+        try {
+            const docRef = doc(db, 'restaurants', userId);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                setTableScanLink(data.tableScanLink || '');
+                setHasAccess(data.hasAccess || false)
+            }
+        } catch (error) {
+            setToast({
+                visible: true,
+                message: "Error fetching restaurant data.",
+                type: "error",
+            });
+        }
+    };
+
     const fetchMenuItems = async (userId) => {
         try {
             const menuRef = doc(db, "menus", userId);
@@ -49,7 +69,6 @@ export default function MenuDashboard({ user }) {
             if (menuSnap.exists()) {
                 const data = menuSnap.data();
                 setMenuItems(data.items || []);
-                setTableScanLink(data.tableScanLink || '');
             }
         } catch (error) {
             setToast({
@@ -100,7 +119,7 @@ export default function MenuDashboard({ user }) {
 
             await setDoc(
                 menuRef,
-                { items: updatedItems },
+                { tableScanLink: tableScanLink, items: updatedItems, hasAccess: hasAccess, userId: user.uid },
                 { merge: true }
             );
 

@@ -207,12 +207,16 @@ export default function RestaurantRatingPage() {
                         />
                     )}
 
-                    <div className="max-w-md w-full bg-white shadow-lg rounded-lg p-6 text-center relative">
+                    <div
+                        className="max-w-md w-full bg-white shadow-lg rounded-lg p-6 text-center relative overflow-hidden">
 
-                        <div
-                            className="absolute top-0 left-0 h-12 w-12 bg-primary transform rotate-45 -translate-y-6 -translate-x-6"
-                            style={{backgroundColor: themeColor}}
-                        />
+                        <div className="absolute left-0 top-0 h-16 w-16">
+                            <div
+                                className="absolute transform -rotate-45 text-center text-white font-semibold h-8 left-[-64px] top-[32px] w-[170px]"
+                                style={{backgroundColor: themeColor}}
+                            >
+                            </div>
+                        </div>
 
                         {logoUrl && (
                             <Image

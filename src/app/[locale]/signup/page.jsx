@@ -8,6 +8,7 @@ import Toast from '../../../components/Toast'; // Adjust the path as needed
 import videoThumbnail from '../../../images/signupImage.webp';
 import Image from 'next/image';
 import arrowImage from '../../../images/Arrow_01.png';
+import Link from 'next/link'; // Import Link for navigation
 
 export const runtime = "edge";
 
@@ -122,6 +123,13 @@ export default function SignUp() {
                         </button>
                     </form>
                 )}
+
+                <p className="text-gray-600 mt-4">
+                    Already have an account?{' '}
+                    <Link href="/login" className="text-blue-600 hover:underline">
+                        Log in here
+                    </Link>.
+                </p>
             </div>
         </div>
     );

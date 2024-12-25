@@ -58,7 +58,7 @@ export const Header = ({ locale, onLocaleChange, intl }) => {
               {intl.formatMessage({ id: "announcement.primary" })}
             </p>
             <div className="inline-flex gap-1 items-center">
-              <p>{intl.formatMessage({ id: "announcement.secondary" })}</p>
+              <Link href='/signup'>{intl.formatMessage({ id: "announcement.secondary" })}</Link>
               <ArrowRight className="h-4 w-4 inline-flex justify-center items-center" />
             </div>
           </div>
@@ -121,9 +121,9 @@ export const Header = ({ locale, onLocaleChange, intl }) => {
                   <a href="#pricing">
                     {intl.formatMessage({ id: "header.pricing" })}
                   </a>
-                  <a href="#contact">
+                  <Link href="/contact">
                     {intl.formatMessage({ id: "header.help" })}
-                  </a>
+                  </Link>
                   <button
                       className="bg-white text-black px-4 py-2 rounded-lg font-medium"
                       onClick={handleDashboard}

@@ -24,7 +24,7 @@ const TrackPage = () => {
                 });
 
                 // Redirect to the table scan page
-                router.replace(`https://tablescan.pages.dev/review/${tableScanId}`);
+                router.replace(`https://quicktablescan.com/review/${tableScanId}`);
             } catch (error) {
                 console.error("Error logging scan event:", error);
             }

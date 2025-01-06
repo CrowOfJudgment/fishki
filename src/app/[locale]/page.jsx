@@ -44,19 +44,6 @@ export default function Home({ params }) {
         document.cookie = `NEXT_LOCALE=${newLocale}; path=/`;
     };
 
-    useEffect(() => {
-        // Dynamically load the widget script
-        const script = document.createElement('script');
-        script.type = 'module';
-        script.src = 'https://widget.fiidbakk.com/main.js';
-        document.body.appendChild(script);
-
-        return () => {
-            // Cleanup: Remove script if necessary
-            document.body.removeChild(script);
-        };
-    }, []);
-
     return (
         <>
             <Header locale={locale} onLocaleChange={changeLocale} intl={intl}/>
@@ -67,7 +54,6 @@ export default function Home({ params }) {
             {/*<Testimonials />*/}
             <CallToAction intl={intl}/>
             <Footer/>
-            <feedback-widget widgetid="677bd3a1c750d46447ccb84a"></feedback-widget>
         </>
     );
 }

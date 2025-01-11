@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import {useEffect, useRef, useState} from "react";
 import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { onAuthStateChanged } from "firebase/auth";
@@ -8,6 +8,7 @@ import Link from "next/link";
 import Toast from "./Toast";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db, storage, auth } from '../lib/firebaseConfig';
+import {QRCodeCanvas} from "qrcode.react";
 
 export default function MenuDashboard({ user }) {
     const [foodName, setFoodName] = useState('');
@@ -25,6 +26,7 @@ export default function MenuDashboard({ user }) {
     const [menuItems, setMenuItems] = useState([]);
     const [toast, setToast] = useState({ visible: false, message: '', type: '' });
 
+    const qrCodeRef = useRef(null);
     const router = useRouter();
 
     useEffect(() => {
@@ -172,6 +174,34 @@ export default function MenuDashboard({ user }) {
                 type: "error",
             });
         }
+    };
+
+    const handleCopyLink = () => {
+        const link = `https://quicktablescan.com/menu/${tableScanLink}`;
+        navigator.clipboard.writeText(link)
+            .then(() => {
+                setToast({
+                    visible: true,
+                    message: "Link copied to clipboard",
+                    type: "success",
+                });
+            })
+            .catch(err => {
+                setToast({
+                    visible: true,
+                    message: "Failed to copy link.",
+                    type: "error",
+                });
+            });
+    };
+
+    const handleDownloadQRCode = () => {
+        const canvas = qrCodeRef.current.querySelector("canvas");
+        const pngUrl = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+        const downloadLink = document.createElement("a");
+        downloadLink.href = pngUrl;
+        downloadLink.download = "menu_qrcode.png";
+        downloadLink.click();
     };
 
     return (
@@ -322,6 +352,31 @@ export default function MenuDashboard({ user }) {
                     </li>
                 ))}
             </ul>
+
+            <div className="mt-8 flex flex-col items-center">
+                <div ref={qrCodeRef}>
+                    <QRCodeCanvas
+                        value={`https://quicktablescan.com/menu/${tableScanLink}`}
+                        size={128}
+                        level="H"
+                        includeMargin={true}
+                    />
+                </div>
+
+                <button
+                    onClick={handleDownloadQRCode}
+                    className="mt-4 py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none"
+                >
+                    Download QR Code
+                </button>
+
+                <button
+                    onClick={handleCopyLink}
+                    className="mt-4 py-2 px-4 bg-gray-600 text-white rounded-lg hover:bg-gray-700 focus:outline-none"
+                >
+                    Copy the Link
+                </button>
+            </div>
 
             {/* Link to Public Page */}
             <Link href={`/menu/${tableScanLink}`} className="block mt-4 text-blue-500 hover:underline text-center">

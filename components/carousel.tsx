@@ -13,10 +13,10 @@ function PhoneMockup({
   scale?: number;
 }) {
   return (
-    <div className="relative w-[280px] max-w-full rounded-[42px] bg-gradient-to-b from-slate-900 via-black to-slate-900 p-1.5 shadow-[0_30px_90px_rgba(15,23,42,0.45)]">
+    <div className="relative w-[220px] max-w-full rounded-[34px] bg-gradient-to-b from-slate-900 via-black to-slate-900 p-[5px] shadow-[0_30px_90px_rgba(15,23,42,0.45)] sm:w-[280px] sm:rounded-[42px] sm:p-1.5">
       <div className="absolute inset-x-10 top-3 h-8 rounded-full bg-white/10 blur-xl" />
       <div className="absolute left-1/2 top-2 h-1.5 w-24 -translate-x-1/2 rounded-full bg-white/20" />
-      <div className="relative flex h-[560px] items-center justify-center overflow-hidden rounded-[36px] bg-white ring-1 ring-white/10">
+      <div className="relative flex h-[440px] items-center justify-center overflow-hidden rounded-[30px] bg-white ring-1 ring-white/10 sm:h-[560px] sm:rounded-[38px]">
         <img
           alt={alt}
           src={src}
@@ -118,14 +118,14 @@ export default function Carousel() {
           <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-slate-950 to-transparent" />
 
           <div className="relative px-4 py-6 sm:px-8 sm:py-8">
-            <div className="mb-6 flex items-end justify-between gap-4">
+            <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <h3 className="mt-2 text-xl font-semibold text-white sm:text-2xl">
                   {slides[active].title}
                 </h3>
               </div>
 
-              <div className="hidden items-center gap-2 sm:flex">
+              <div className="flex items-center gap-2 self-start sm:self-auto">
                 <button
                   type="button"
                   onClick={() => goToSlide(active - 1)}

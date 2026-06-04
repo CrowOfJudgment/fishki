@@ -1,0 +1,62 @@
+{
+  "hero": {
+    "title": "Zdobądź następną pracę w IT szybciej",
+    "subtitle": "Ćwicz pytania, które naprawdę dostają juniorzy na rozmowach rekrutacyjnych.",
+    "earlyAcces": "Wczesny dostęp już wkrótce. Dołącz do listy oczekujących, żeby jako pierwszy dostać informację o starcie."
+  },
+  "cta": {
+    "cta": "Dołącz do listy oczekujących!"
+  },
+  "footer": {
+    "product": "Produkt",
+    "features": "Funkcje",
+    "resources": "Zasoby",
+    "terms": "Warunki usługi",
+    "social": "Media społecznościowe"
+  },
+  "features": {
+    "heading": "Fiszki i symulacje rozmów kwalifikacyjnych oparte na prawdziwych pytaniach rekrutacyjnych, dzięki którym idziesz na rozmowę przygotowany, a nie zdany na zgadywanie.",
+    "value": {
+        "heading": "Zdobądź pierwszą pracę",
+        "text": "Zdobądź pierwszą pracę w IT szybciej dzięki ćwiczeniu realnych pytań rekrutacyjnych zamiast samej teorii i książkowej wiedzy."
+    },
+    "problem": {
+        "heading": "Dlaczego juniorzy odpadają",
+        "text": "Juniorzy najczęściej odpadają nie przez brak wiedzy, ale brak praktyki odpowiadania na pytania pod presją rozmowy."
+    },
+    "how": {
+        "heading": "Prosta codzienna nauka",
+        "text": "Wybierasz temat, ćwiczysz fiszki z realnych pytań, powtarzasz codziennie i budujesz pewność przed rozmowami rekrutacyjnymi."
+    },
+    "simulation": {
+        "heading": "Trening rozmów IT",
+        "text": "Symulujesz prawdziwe rozmowy z ograniczeniem czasu, uczysz się odpowiadać jasno i przestajesz blokować się na pytaniach."
+    },
+    "why": {
+        "heading": "Oparte na powtórkach",
+        "text": "Pewność siebie wynika z powtórek, nie teorii. Trening pamięci sprawia, że odpowiedzi stają się naturalne."
+    },
+    "built": {
+        "heading": "Dla początkujących",
+        "text": "Stworzone przez developerów, którzy sami przechodzili pierwsze rozmowy. Usuwa chaos, stres i brak przygotowania."
+    }
+  },
+  "carousel": {
+    "mainScreen": {
+      "title": "Wszystko w jednym miejscu",
+      "desc": "Śledź postępy, statystyki i zarządzaj nauką."
+    },
+    "splashScreen": {
+      "title": "Zacznij naukę w kilka sekund",
+      "desc": "Zaloguj się i wróć dokładnie tam, gdzie przerwałeś."
+    },
+    "flashcards": {
+      "title": "Nauka w trybie aktywnym",
+      "desc": "Ćwicz fiszki i utrwalaj wiedzę dzięki powtórkom."
+    }
+  },
+  "floatingCta":{
+    "text": "Zapisz się już teraz!"
+  }
+  
+}

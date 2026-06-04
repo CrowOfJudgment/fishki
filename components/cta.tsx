@@ -25,7 +25,10 @@ export default function Cta() {
   const t = useT();
 
   return (
-    <section id="cta" className="scroll-mt-28 py-20 sm:py-28">
+    <section
+      id="cta"
+      className="scroll-mt-28 pb-16 pt-10 sm:pb-20 sm:pt-12"
+    >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="relative overflow-hidden rounded-[2.5rem] border border-slate-200/80 bg-[linear-gradient(135deg,rgba(255,255,255,0.94),rgba(244,239,230,0.88))] p-4 shadow-[0_30px_90px_rgba(15,23,42,0.1)] sm:p-6">
           <div

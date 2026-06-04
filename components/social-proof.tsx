@@ -6,7 +6,10 @@ export default function SocialProof() {
   const t = useT();
 
   return (
-    <section id="proof" className="relative scroll-mt-28 py-20 sm:py-28">
+    <section
+      id="proof"
+      className="relative scroll-mt-28 pb-10 pt-16 sm:pb-12 sm:pt-24"
+    >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="rounded-[2rem] border border-slate-200/80 bg-white/85 p-8 shadow-[0_24px_70px_rgba(15,23,42,0.08)] backdrop-blur-xl sm:p-10">

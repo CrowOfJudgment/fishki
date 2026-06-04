@@ -60,7 +60,7 @@ export default function Header() {
       <div className="mx-auto max-w-6xl px-3 sm:px-6">
         <div className="flex items-center justify-between gap-2 rounded-[1.25rem] border border-white/55 bg-white/72 px-3 py-2.5 shadow-[0_16px_50px_rgba(15,23,42,0.09)] backdrop-blur-xl sm:gap-3 sm:rounded-[1.4rem] sm:px-4 sm:py-3">
           <div className="flex items-center gap-3">
-            <Logo className="w-[85px] sm:w-[108px] lg:w-[128px]" />
+            <Logo horizontal className="w-[92px] sm:w-[118px] lg:w-[138px]" />
             <span className="hidden rounded-full border border-blue-500/15 bg-blue-500/8 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.28em] text-blue-700 md:inline-flex">
               {t.hero.badge}
             </span>

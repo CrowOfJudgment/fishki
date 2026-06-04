@@ -118,14 +118,14 @@ export default function Carousel() {
           <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-slate-950 to-transparent" />
 
           <div className="relative px-4 py-6 sm:px-8 sm:py-8">
-            <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <h3 className="mt-2 text-xl font-semibold text-white sm:text-2xl">
+            <div className="mb-6 flex items-start justify-between gap-3">
+              <div className="min-w-0 flex-1">
+                <h3 className="mt-2 text-xl font-semibold leading-tight text-white sm:text-2xl">
                   {slides[active].title}
                 </h3>
               </div>
 
-              <div className="flex items-center gap-2 self-start sm:self-auto">
+              <div className="flex shrink-0 items-center gap-2">
                 <button
                   type="button"
                   onClick={() => goToSlide(active - 1)}

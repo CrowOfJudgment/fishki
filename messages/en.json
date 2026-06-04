@@ -3,7 +3,8 @@
     "features": "Features",
     "preview": "Preview",
     "proof": "Why it works",
-    "cta": "Join"
+    "cta": "join",
+    "ctaAria": "Join the waitlist"
   },
   "hero": {
     "badge": "The best prep for junior developers",

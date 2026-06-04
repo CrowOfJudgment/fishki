@@ -3,7 +3,8 @@
     "features": "Funkcje",
     "preview": "Demo",
     "proof": "Dlaczego to działa",
-    "cta": "Dołącz"
+    "cta": "dołącz",
+    "ctaAria": "Dołącz do listy oczekujących"
   },
   "hero": {
     "badge": "Najlepsze przygotowanie dla junior developerów",

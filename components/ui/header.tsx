@@ -1,11 +1,53 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import Logo from "./logo";
 import { useT } from "@/lib/i18n-context";
 
 export default function Header() {
   const t = useT();
+  const [isMobile, setIsMobile] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const updateVisibility = () => {
+      const mobile = window.matchMedia("(max-width: 639px)").matches;
+      const currentScrollY = window.scrollY;
+
+      setIsMobile(mobile);
+
+      if (!mobile) {
+        setIsVisible(true);
+        lastScrollY.current = currentScrollY;
+        return;
+      }
+
+      if (currentScrollY < 12) {
+        setIsVisible(true);
+      } else if (currentScrollY > lastScrollY.current && currentScrollY > 24) {
+        setIsVisible(false);
+      } else if (currentScrollY < lastScrollY.current) {
+        setIsVisible(true);
+      }
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    updateVisibility();
+    window.addEventListener("scroll", updateVisibility, { passive: true });
+    window.addEventListener("resize", updateVisibility);
+
+    return () => {
+      window.removeEventListener("scroll", updateVisibility);
+      window.removeEventListener("resize", updateVisibility);
+    };
+  }, []);
+
+  if (isMobile && !isVisible) {
+    return null;
+  }
 
   const navLinks = [
     { href: "#preview", label: t.header.preview },
@@ -39,11 +81,10 @@ export default function Header() {
           <div className="flex items-center gap-2">
             <Link
               href="#cta"
-              aria-label={t.header.cta}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-slate-950 text-sm font-medium text-white shadow-[0_10px_30px_rgba(15,23,42,0.18)] transition hover:-translate-y-0.5 hover:bg-slate-800 sm:h-auto sm:w-auto sm:px-4 sm:py-2"
+              aria-label={t.header.ctaAria ?? t.header.cta}
+              className="inline-flex h-9 items-center justify-center rounded-full bg-slate-950 px-4 text-sm font-medium text-white shadow-[0_10px_30px_rgba(15,23,42,0.18)] transition hover:-translate-y-0.5 hover:bg-slate-800"
             >
-              <span className="sm:hidden">→</span>
-              <span className="hidden sm:inline">{t.header.cta}</span>
+              {t.header.cta}
             </Link>
           </div>
         </div>

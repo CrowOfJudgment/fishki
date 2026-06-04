@@ -6,93 +6,87 @@ import { useT } from "@/lib/i18n-context";
 
 export default function Footer({ border = false }: { border?: boolean }) {
   const t = useT();
+  const year = new Date().getFullYear();
+
+  const productLinks = [
+    { href: "#features", label: t.footer.features },
+    { href: "#preview", label: t.footer.preview },
+    { href: "#proof", label: t.footer.proof },
+  ];
 
   return (
-    <footer>
+    <footer
+      className={`relative pb-10 pt-16 sm:pt-20 ${
+        border ? "border-t border-slate-200/80" : ""
+      }`}
+    >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="relative overflow-hidden rounded-[2.25rem] border border-slate-200/80 bg-white/75 px-5 py-8 shadow-[0_24px_70px_rgba(15,23,42,0.08)] backdrop-blur-xl sm:px-8 sm:py-10">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -left-16 top-0 h-48 w-48 rounded-full bg-blue-400/10 blur-3xl"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-16 bottom-0 h-56 w-56 rounded-full bg-cyan-400/10 blur-3xl"
+          />
 
-        {/* TOP AREA */}
-        <div
-          className={`flex flex-col items-center gap-10 py-8 md:flex-row md:justify-center md:gap-20 md:py-12 ${
-            border
-              ? "border-t [border-image:linear-gradient(to_right,transparent,var(--color-slate-200),transparent)1]"
-              : ""
-          }`}
-        >
-          {/* Logo */}
-          <div className="flex flex-col items-center text-center md:items-center">
-            <Logo />
-          </div>
-
-          {/* Copyright */}
-          <div className="flex flex-col items-center text-center">
-            <div className="text-sm text-gray-600">
-              &copy; Fishki
+          <div className="relative grid gap-10 lg:grid-cols-[1.1fr_0.8fr_0.8fr]">
+            <div className="max-w-md">
+              <Logo />
+              <p className="mt-5 text-sm leading-7 text-slate-600">
+                {t.footer.tagline}
+              </p>
             </div>
-          </div>
 
-          {/* Social */}
-          <div className="flex flex-col items-center text-center">
-            <h3 className="text-sm font-medium mb-2">
-              {t.footer.social}
-            </h3>
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">
+                {t.footer.product}
+              </p>
+              <ul className="mt-5 space-y-3">
+                {productLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="group inline-flex items-center gap-2 text-sm font-medium text-slate-700 transition hover:text-slate-950"
+                    >
+                      <span className="h-1.5 w-1.5 rounded-full bg-slate-300 transition group-hover:bg-slate-700" />
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-            <ul className="flex gap-2 justify-center">
-              <li>
-                <Link
-                  className="flex items-center justify-center text-blue-500 transition hover:text-blue-600"
-                  href="#0"
-                  aria-label="Twitter"
-                >
-                  <svg className="h-8 w-8 fill-current" viewBox="0 0 32 32">
-                    <path d="m13.063 9 3.495 4.475L20.601 9h2.454l-5.359 5.931L24 23h-4.938l-3.866-4.893L10.771 23H8.316l5.735-6.342L8 9h5.063Z" />
-                  </svg>
-                </Link>
-              </li>
+            <div className="grid gap-6 sm:grid-cols-2 lg:block">
+              <div className="rounded-2xl border border-slate-200/80 bg-white/80 p-5 shadow-[0_12px_30px_rgba(15,23,42,0.05)]">
+                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">
+                  {t.footer.social}
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {["LinkedIn", "FB", "IG", "TIKTOK"].map((label) => (
+                    <span
+                      key={label}
+                      className="inline-flex h-10 min-w-10 items-center justify-center rounded-full border border-slate-200 bg-slate-50 px-3 text-xs font-semibold uppercase tracking-[0.22em] text-slate-600"
+                    >
+                      {label}
+                    </span>
+                  ))}
+                </div>
+              </div>
 
-              <li>
-                <Link
-                  className="flex items-center justify-center text-blue-500 transition hover:text-blue-600"
-                  href="#0"
-                  aria-label="Medium"
-                >
-                  <svg className="h-8 w-8 fill-current" viewBox="0 0 32 32">
-                    <path d="M23 8H9a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1Z" />
-                  </svg>
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  className="flex items-center justify-center text-blue-500 transition hover:text-blue-600"
-                  href="#0"
-                  aria-label="Github"
-                >
-                  <svg className="h-8 w-8 fill-current" viewBox="0 0 32 32">
-                    <path d="M16 8.2c-4.4 0-8 3.6-8 8 0 3.5 2.3 6.5 5.5 7.6.4.1.5-.2.5-.4V22c-2.2.5-2.7-1-2.7-1-.4-.9-.9-1.2-.9-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.3 1.9.9 2.3.7.1-.5.3-.9.5-1.1-1.8-.2-3.6-.9-3.6-4 0-.9.3-1.6.8-2.1-.1-.2-.4-1 .1-2.1 0 0 .7-.2 2.2.8.6-.2 1.3-.3 2-.3s1.4.1 2 .3c1.5-1 2.2-.8 2.2-.8.4 1.1.2 1.9.1 2.1.5.6.8 1.3.8 2.1 0 3.1-1.9 3.7-3.7 3.9.3.4.6.9.6 1.6v2.2c0 .2.1.5.6.4 3.2-1.1 5.5-4.1 5.5-7.6-.1-4.4-3.7-8-8.1-8Z" />
-                  </svg>
-                </Link>
-              </li>
-            </ul>
+              <div className="rounded-2xl border border-slate-200/80 bg-white/80 p-5 shadow-[0_12px_30px_rgba(15,23,42,0.05)]">
+                {/* <p className="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">
+                  {t.footer.legal}
+                </p> */}
+                <p className="mt-4 text-sm leading-6 text-slate-600">
+                  © 2026 Fishki. Built with care for junior developers.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-
-      {/* BIG TEXT BACKGROUND */}
-      <section className="relative pb-24 sm:pb-32 overflow-hidden">
-        <div className="mt-10 flex justify-center" aria-hidden="true">
-          <div className="text-center font-bold leading-none text-gray-200/40 select-none pointer-events-none">
-            <div className="text-[80px] sm:text-[140px] md:text-[220px] lg:text-[300px] leading-none">
-              Fishki
-            </div>
-          </div>
-
-          {/* Glow */}
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2">
-            <div className="h-40 w-40 sm:h-48 sm:w-48 md:h-56 md:w-56 rounded-full border-[20px] border-blue-700 blur-[80px]" />
-          </div>
-        </div>
-      </section>
     </footer>
   );
 }

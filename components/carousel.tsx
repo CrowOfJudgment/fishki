@@ -103,7 +103,7 @@ export default function Carousel() {
   }, []);
 
   return (
-    <div className="w-full">
+    <section id="preview" className="w-full scroll-mt-28">
       <div
         className="mx-auto max-w-6xl px-4 pb-5 sm:px-6"
         onMouseEnter={stopAutoplay}
@@ -120,6 +120,9 @@ export default function Carousel() {
           <div className="relative px-4 py-6 sm:px-8 sm:py-8">
             <div className="mb-6 flex items-start justify-between gap-3">
               <div className="min-w-0 flex-1">
+                <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.3em] text-cyan-100/80">
+                  {t.header.preview}
+                </span>
                 <h3 className="mt-2 text-xl font-semibold leading-tight text-white sm:text-2xl">
                   {slides[active].title}
                 </h3>
@@ -203,6 +206,6 @@ export default function Carousel() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

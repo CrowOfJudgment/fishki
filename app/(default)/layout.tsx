@@ -1,3 +1,4 @@
+import Header from "@/components/ui/header";
 import Footer from "@/components/ui/footer";
 
 export default function DefaultLayout({
@@ -7,7 +8,8 @@ export default function DefaultLayout({
 }) {
   return (
     <>
-      <main className="grow">{children}</main>
+      <Header />
+      <main className="grow pt-24 sm:pt-28">{children}</main>
       <Footer border={true} />
     </>
   );

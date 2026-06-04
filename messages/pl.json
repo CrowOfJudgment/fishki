@@ -1,45 +1,73 @@
 {
-  "hero": {
-    "title": "Zdobądź następną pracę w IT szybciej",
-    "subtitle": "Ćwicz pytania, które naprawdę dostają juniorzy na rozmowach rekrutacyjnych.",
-    "earlyAcces": "Wczesny dostęp już wkrótce. Dołącz do listy oczekujących, żeby jako pierwszy dostać informację o starcie."
-  },
-  "cta": {
-    "cta": "Dołącz do listy oczekujących!"
-  },
-  "footer": {
-    "product": "Produkt",
+  "header": {
     "features": "Funkcje",
-    "resources": "Zasoby",
-    "terms": "Warunki usługi",
-    "social": "Media społecznościowe"
+    "preview": "Demo",
+    "proof": "Dlaczego to działa",
+    "cta": "Dołącz"
+  },
+  "hero": {
+    "badge": "Najlepsze przygotowanie dla junior developerów",
+    "title": "Zdobądź następną pracę w IT szybciej",
+    "subtitle": "Ćwicz pytania rekrutacyjne, które juniorzy naprawdę dostają na rozmowach.",
+    "primaryCta": "Dołącz do listy oczekujących",
+    "secondaryCta": "Zobacz produkt",
+    "earlyAcces": "Wczesny dostęp już wkrótce. Dołącz do listy oczekujących, żeby jako pierwszy dostać informację o starcie.",
+    "highlights": [
+      "Prawdziwe pytania rekrutacyjne",
+      "Codzienne ćwiczenia pamięciowe",
+      "Pewność siebie pod presją"
+    ],
+    "stats": [
+      { "value": "3", "label": "tryby ćwiczeń" },
+      { "value": "24/7", "label": "dostępne zawsze" },
+      { "value": "0", "label": "lania wody" }
+    ],
+    "cardLabel": "Dzisiejszy zestaw nauki",
+    "cardTitle": "Jeden spokojny cykl od ćwiczeń do pewności siebie",
+    "cards": [
+      {
+        "title": "Fiszki",
+        "text": "Krótkie sesje pamięci, które utrwalają odpowiedzi."
+      },
+      {
+        "title": "Symulacje rozmów kwalifikacyjnych",
+        "text": "Pytania ograniczone czasowo, które uczą odpowiadania pod presją."
+      },
+      {
+        "title": "Powtórki",
+        "text": "Powtarzaj zagadnienia, aż staną się automatyczne."
+      }
+    ]
   },
   "features": {
+    "badge": "Czemu to sprawia wrażenie premium",
     "heading": "Fiszki i symulacje rozmów kwalifikacyjnych oparte na prawdziwych pytaniach rekrutacyjnych, dzięki którym idziesz na rozmowę przygotowany, a nie zdany na zgadywanie.",
+    "intro": "Krótkie ćwiczenia. Prawdziwe pytania. Spokojniejsza droga do pewności.",
     "value": {
-        "heading": "Zdobądź pierwszą pracę",
-        "text": "Zdobądź pierwszą pracę w IT szybciej dzięki ćwiczeniu realnych pytań rekrutacyjnych zamiast samej teorii i książkowej wiedzy."
+      "heading": "Zdobądź pierwszą pracę",
+      "text": "Zdobądź pierwszą pracę w IT szybciej dzięki ćwiczeniu realnych pytań rekrutacyjnych zamiast samej teorii i książkowej wiedzy."
     },
     "problem": {
-        "heading": "Dlaczego juniorzy odpadają",
-        "text": "Juniorzy najczęściej odpadają nie przez brak wiedzy, ale brak praktyki odpowiadania na pytania pod presją rozmowy."
+      "heading": "Dlaczego juniorzy odpadają",
+      "text": "Juniorzy najczęściej odpadają nie przez brak wiedzy, ale brak praktyki odpowiadania na pytania pod presją rozmowy."
     },
     "how": {
-        "heading": "Prosta codzienna nauka",
-        "text": "Wybierasz temat, ćwiczysz fiszki z realnych pytań, powtarzasz codziennie i budujesz pewność przed rozmowami rekrutacyjnymi."
+      "heading": "Proste codzienne ćwiczenia",
+      "text": "Wybierz temat, ćwicz fiszki oparte na realnych pytaniach, powtarzaj codziennie i stopniowo buduj pewność siebie."
     },
     "simulation": {
-        "heading": "Trening rozmów IT",
-        "text": "Symulujesz prawdziwe rozmowy z ograniczeniem czasu, uczysz się odpowiadać jasno i przestajesz blokować się na pytaniach."
+      "heading": "Trening rozmów IT",
+      "text": "Symuluj prawdziwe rozmowy z pytaniami na czas i uporządkowanymi odpowiedziami, aby przestać się blokować."
     },
     "why": {
-        "heading": "Oparte na powtórkach",
-        "text": "Pewność siebie wynika z powtórek, nie teorii. Trening pamięci sprawia, że odpowiedzi stają się naturalne."
+      "heading": "Oparte na powtórkach",
+      "text": "Pewność siebie wynika z powtarzania, nie teorii. Trening pamięci sprawia, że odpowiedzi stają się naturalne."
     },
     "built": {
-        "heading": "Dla początkujących",
-        "text": "Stworzone przez developerów, którzy sami przechodzili pierwsze rozmowy. Usuwa chaos, stres i brak przygotowania."
-    }
+      "heading": "Dla początkujących",
+      "text": "Stworzone przez developerów, którzy sami mieli pierwsze trudne rozmowy. Usuwa chaos, stres i brak przygotowania."
+    },
+    "footerNote": "Oparte na powtórkach, klarowności i pewności siebie pod presją."
   },
   "carousel": {
     "mainScreen": {
@@ -52,11 +80,45 @@
     },
     "flashcards": {
       "title": "Nauka w trybie aktywnym",
-      "desc": "Ćwicz fiszki i utrwalaj wiedzę dzięki powtórkom."
+      "desc": "Ćwicz i utrwalaj wiedzę dzięki powtórkom."
     }
   },
-  "floatingCta":{
+  "proof": {
+    "badge": "Sygnały zaufania",
+    "heading": "Produkt, który od pierwszego kliknięcia dodaje ci pewności siebie.",
+    "subtitle": "Mniej teorii, więcej powtórek, więcej pewności wtedy, gdy to naprawdę ważne.",
+    "stats": [
+      { "value": "3", "label": "główne tryby nauki" },
+      { "value": "1", "label": "prosta pętla nauki" },
+      { "value": "0", "label": "zbędnej roboty" }
+    ],
+    "quote": "Każdy ekran został zaprojektowany tak, abyś stale robił postęp: krótkie sesje, sensowne pytania i jasna ścieżka od ćwiczeń do pewności siebie.",
+    "author": "Metodologia Fishki",
+    "role": "Stworzona dla junior developerów"
+  },
+  "cta": {
+    "badge": "Lista oczekujących",
+    "title": "Bądź na premierę.",
+    "subtitle": "Otrzymaj wczesny dostęp, gdy pierwsza dopracowana wersja będzie gotowa. Bez spamu, tylko informacje o produkcie.",
+    "benefits": [
+      "Pierwszy dostęp do bety",
+      "Tylko krótkie maile z aktualizacjami",
+      "Nauka od pierwszego dnia"
+    ],
+    "cta": "Dołącz do listy oczekujących!",
+    "formNote": "Dołączenie zajmuje mniej niż minutę."
+  },
+  "footer": {
+    "tagline": "Skoncentrowany system ćwiczeń dla juniorów, którzy chcą szybciej poczuć się gotowi na rozmowy rekrutacyjne.",
+    "product": "Produkt",
+    "features": "Funkcje",
+    "preview": "Demo",
+    "proof": "Dlaczego to działa",
+    "waitlist": "Lista oczekujących",
+    "social": "Media społecznościowe",
+    "legal": "Warunki usługi"
+  },
+  "floatingCta": {
     "text": "Zapisz się już teraz!"
   }
-  
 }

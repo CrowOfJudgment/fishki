@@ -42,15 +42,15 @@
     }
   },
   "carousel": {
-    "main-screen": {
+    "mainScreen": {
       "title": "Everything in one place",
       "desc": "Track progress, view stats, and manage your learning."
     },
-    "splash-screen": {
+    "splashScreen": {
       "title": "Start learning in seconds",
       "desc": "Sign in and continue exactly where you left off."
     },
-    "flashacrds": {
+    "flashcards": {
       "title": "Active learning mode",
       "desc": "Practice flashcards and reinforce knowledge through repetition."
     }

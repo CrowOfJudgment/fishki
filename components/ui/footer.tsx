@@ -33,7 +33,7 @@ export default function Footer({ border = false }: { border?: boolean }) {
 
           <div className="relative grid gap-10 lg:grid-cols-[1.1fr_0.8fr_0.8fr]">
             <div className="max-w-md">
-              <Logo />
+              <Logo className="w-[120px] sm:w-[150px]" />
               <p className="mt-5 text-sm leading-7 text-slate-600">
                 {t.footer.tagline}
               </p>

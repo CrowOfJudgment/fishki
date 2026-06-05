@@ -103,7 +103,7 @@ export default function Cta() {
               />
 
               <div className="relative overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white/90 shadow-[0_24px_70px_rgba(15,23,42,0.12)]">
-                <div className="flex items-center justify-between gap-4 border-b border-slate-200/70 px-5 py-4 sm:px-6">
+                {/* <div className="flex items-center justify-between gap-4 border-b border-slate-200/70 px-5 py-4 sm:px-6">
                   <div className="min-w-0">
                     <p className="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">
                       {t.cta.cta}
@@ -112,7 +112,7 @@ export default function Cta() {
                       {t.cta.formNote}
                     </p>
                   </div>
-                </div>
+                </div> */}
 
                 <div className="bg-[linear-gradient(180deg,rgba(15,23,42,0.03),rgba(15,23,42,0))] p-3 sm:p-4">
                   <div className="overflow-hidden rounded-[1.4rem] border border-slate-200/80 bg-white shadow-inner">

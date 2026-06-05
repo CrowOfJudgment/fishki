@@ -71,14 +71,14 @@ export default function Cta() {
                 ))}
               </ul>
 
-              {/* <div className="mt-8 rounded-2xl border border-slate-200/80 bg-white/80 px-4 py-4 shadow-[0_12px_30px_rgba(15,23,42,0.05)]">
+              <div className="mt-8 rounded-2xl border border-slate-200/80 bg-white/80 px-4 py-4 shadow-[0_12px_30px_rgba(15,23,42,0.05)]">
                 <p className="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">
                   {t.cta.cta}
                 </p>
                 <p className="mt-2 text-sm leading-6 text-slate-600">
                   {t.cta.formNote}
                 </p>
-              </div> */}
+              </div>
             </div>
 
             <div className="relative p-1 sm:p-2">
@@ -88,7 +88,7 @@ export default function Cta() {
               />
 
               <div className="relative overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white/90 shadow-[0_24px_70px_rgba(15,23,42,0.12)]">
-                <div className="flex items-center justify-between gap-4 border-b border-slate-200/70 px-5 py-4 sm:px-6">
+                {/* <div className="flex items-center justify-between gap-4 border-b border-slate-200/70 px-5 py-4 sm:px-6">
                   <div className="min-w-0">
                     <p className="text-2xl uppercase tracking-[0.28em] text-slate-500">
                       {t.cta.cta}
@@ -97,10 +97,10 @@ export default function Cta() {
                       {t.cta.formNote}
                     </p>
                   </div>
-                  {/* <span className="shrink-0 rounded-full border border-emerald-500/15 bg-emerald-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-emerald-700">
+                  <span className="shrink-0 rounded-full border border-emerald-500/15 bg-emerald-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-emerald-700">
                     Live
-                  </span> */}
-                </div>
+                  </span>
+                </div> */}
 
                 <div className="bg-[linear-gradient(180deg,rgba(15,23,42,0.03),rgba(15,23,42,0))] p-3 sm:p-4">
                   <div className="overflow-hidden rounded-[1.4rem] border border-slate-200/80 bg-white shadow-inner">

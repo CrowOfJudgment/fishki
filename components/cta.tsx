@@ -1,6 +1,14 @@
 "use client";
 
+import Script from "next/script";
+import { useEffect } from "react";
 import { useT } from "@/lib/i18n-context";
+
+type TallyWindow = Window & {
+  Tally?: {
+    loadEmbeds?: () => void;
+  };
+};
 
 function CheckIcon() {
   return (
@@ -23,6 +31,13 @@ function CheckIcon() {
 
 export default function Cta() {
   const t = useT();
+  const loadEmbeds = () => {
+    (window as TallyWindow).Tally?.loadEmbeds?.();
+  };
+
+  useEffect(() => {
+    loadEmbeds();
+  }, []);
 
   return (
     <section
@@ -88,29 +103,29 @@ export default function Cta() {
               />
 
               <div className="relative overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white/90 shadow-[0_24px_70px_rgba(15,23,42,0.12)]">
-                {/* <div className="flex items-center justify-between gap-4 border-b border-slate-200/70 px-5 py-4 sm:px-6">
+                <div className="flex items-center justify-between gap-4 border-b border-slate-200/70 px-5 py-4 sm:px-6">
                   <div className="min-w-0">
-                    <p className="text-2xl uppercase tracking-[0.28em] text-slate-500">
+                    <p className="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">
                       {t.cta.cta}
                     </p>
-                    <p className="mt-1 text-l leading-6 text-slate-600">
+                    <p className="mt-1 text-sm leading-6 text-slate-600">
                       {t.cta.formNote}
                     </p>
                   </div>
-                  <span className="shrink-0 rounded-full border border-emerald-500/15 bg-emerald-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-emerald-700">
-                    Live
-                  </span>
-                </div> */}
+                </div>
 
                 <div className="bg-[linear-gradient(180deg,rgba(15,23,42,0.03),rgba(15,23,42,0))] p-3 sm:p-4">
                   <div className="overflow-hidden rounded-[1.4rem] border border-slate-200/80 bg-white shadow-inner">
                     <iframe
-                      src="https://tally.so/embed/ODkPZk?hideTitle=1&transparentBackground=1"
+                      data-tally-src="https://tally.so/embed/ODkPZk?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
                       title={t.cta.cta}
                       width="100%"
-                      height="420"
-                      className="h-[420px] w-full border-0 sm:h-[400px] lg:h-[420px]"
+                      height="216"
+                      className="block w-full border-0"
                       frameBorder="0"
+                      marginHeight={0}
+                      marginWidth={0}
+                      loading="lazy"
                     />
                   </div>
                 </div>
@@ -119,6 +134,11 @@ export default function Cta() {
           </div>
         </div>
       </div>
+      <Script
+        src="https://tally.so/widgets/embed.js"
+        strategy="afterInteractive"
+        onLoad={loadEmbeds}
+      />
     </section>
   );
 }

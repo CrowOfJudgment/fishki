@@ -64,7 +64,7 @@ export default function Footer({ border = false }: { border?: boolean }) {
                   {t.footer.social}
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
-                  {["LinkedIn", "FB", "IG", "TIKTOK"].map((label) => (
+                  {["LinkedIn", "IG", "TIKTOK"].map((label) => (
                     <span
                       key={label}
                       className="inline-flex h-10 min-w-10 items-center justify-center rounded-full border border-slate-200 bg-slate-50 px-3 text-xs font-semibold uppercase tracking-[0.22em] text-slate-600"

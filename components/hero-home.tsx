@@ -18,7 +18,7 @@ export default function HeroHome() {
               {t.hero.badge}
             </span>
 
-            <h1 className="mt-6 max-w-3xl font-display text-5xl font-semibold leading-[0.95] tracking-tight text-balance text-slate-950 sm:text-6xl lg:text-7xl">
+            <h1 className="mt-6 max-w-3xl font-display text-5xl font-semibold leading-[1.05] tracking-tight text-balance text-slate-950 sm:text-6xl lg:text-7xl">
               {t.hero.title}
             </h1>
 
@@ -28,7 +28,7 @@ export default function HeroHome() {
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <a
-                href="#cta"
+                href="#waitlist-form"
                 className="inline-flex items-center justify-center rounded-full bg-slate-950 px-6 py-3.5 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(15,23,42,0.18)] transition hover:-translate-y-0.5 hover:bg-slate-800"
               >
                 {t.hero.primaryCta}

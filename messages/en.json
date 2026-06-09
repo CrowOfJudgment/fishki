@@ -71,18 +71,56 @@
     "footerNote": "Built around repetition, clarity, and confidence under pressure."
   },
   "carousel": {
-    "mainScreen": {
-      "title": "Everything in one place",
-      "desc": "Track progress, view stats, and manage your learning."
-    },
-    "splashScreen": {
-      "title": "Start learning in seconds",
-      "desc": "Sign in and continue exactly where you left off."
-    },
-    "flashcards": {
-      "title": "Active learning mode",
-      "desc": "Practice flashcards and reinforce knowledge through repetition."
-    }
+    "slides": [
+      {
+        "title": "Your technical interview journey starts here",
+        "desc": "Prepare for IT interviews faster with smart flashcards and guided learning paths."
+      },
+      {
+        "title": "Choose your career path",
+        "desc": "Focus on the skills that matter most for the roles you want."
+      },
+      {
+        "title": "Track your progress in one place",
+        "desc": "Monitor your growth, revisit weak topics, and stay consistent every day."
+      },
+      {
+        "title": "Practice real interview questions",
+        "desc": "Train on topics commonly asked during technical interviews."
+      },
+      {
+        "title": "Think like an interviewer",
+        "desc": "Learn to distinguish similar concepts and build deeper technical understanding."
+      },
+      {
+        "title": "Master data engineering fundamentals",
+        "desc": "From data warehouses to system architecture, learn one concept at a time."
+      },
+      {
+        "title": "Make better data-driven decisions",
+        "desc": "Practice chart interpretation and strengthen your analytical thinking."
+      },
+      {
+        "title": "Understand, don't just memorize",
+        "desc": "Helpful hints make complex concepts easier to master."
+      },
+      {
+        "title": "Put your knowledge to the test",
+        "desc": "Quizzes and coding challenges reinforce learning and prepare you for assessments."
+      },
+      {
+        "title": "Turn any job posting into a study plan",
+        "desc": "Paste a job description and instantly generate personalized flashcards."
+      },
+      {
+        "title": "Practice interview answers out loud",
+        "desc": "Simulate technical interviews and build confidence before the real thing."
+      },
+      {
+        "title": "Build a daily learning habit",
+        "desc": "Track streaks, mastery levels, and long-term progress."
+      }
+    ]
   },
   "proof": {
     "badge": "Trust signals",

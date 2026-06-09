@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type TouchEvent } from "react";
 import { useT } from "@/lib/i18n-context";
 
 function PhoneMockup({
@@ -51,31 +51,36 @@ function Chevron({
   );
 }
 
+const slideAssets = [
+  { src: "/images/carousel-01-splash-screen.png", scale: 1 },
+  { src: "/images/carousel-02-career-path.png", scale: 1 },
+  { src: "/images/carousel-03-progress-control.png", scale: 1 },
+  { src: "/images/carousel-04-real-interview-questions.png", scale: 1 },
+  { src: "/images/carousel-05-think-like-interviewer.JPEG", scale: 1 },
+  { src: "/images/carousel-06-data-engineering-fundamentals.JPEG", scale: 1 },
+  { src: "/images/carousel-07-data-driven-decisions.JPEG", scale: 1 },
+  { src: "/images/carousel-08-understand-not-memorize.JPEG", scale: 1 },
+  { src: "/images/carousel-09-knowledge-in-practice.png", scale: 1 },
+  { src: "/images/carousel-10-job-posting-study-plan.png", scale: 1 },
+  { src: "/images/carousel-11-practice-answers-out-loud.png", scale: 1 },
+  { src: "/images/carousel-12-daily-learning-habit.png", scale: 1 },
+] as const;
+
 export default function Carousel() {
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState<number>(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const touchStartX = useRef<number | null>(null);
   const t = useT();
 
-  const slides = [
-    {
-      src: "/images/flashcards.png",
-      title: t.carousel.flashcards.title,
-      desc: t.carousel.flashcards.desc,
-      scale: 0.95,
-    },
-    {
-      src: "/images/main-screen.png",
-      title: t.carousel.mainScreen.title,
-      desc: t.carousel.mainScreen.desc,
-      scale: 0.9,
-    },
-    {
-      src: "/images/splash-screen.png",
-      title: t.carousel.splashScreen.title,
-      desc: t.carousel.splashScreen.desc,
-      scale: 1,
-    },
-  ];
+  const slides = slideAssets.map((asset, index) => {
+    const text = t.carousel.slides?.[index] ?? { title: "", desc: "" };
+
+    return {
+      ...asset,
+      title: text.title,
+      desc: text.desc,
+    };
+  });
 
   const stopAutoplay = () => {
     if (intervalRef.current) {
@@ -88,13 +93,39 @@ export default function Carousel() {
     if (intervalRef.current) return;
 
     intervalRef.current = setInterval(() => {
-      setActive((prev) => (prev + 1) % slides.length);
+      setActive((prev: number) => (prev + 1) % slides.length);
     }, 4000);
   };
 
   const goToSlide = (nextIndex: number) => {
     const next = (nextIndex + slides.length) % slides.length;
     setActive(next);
+  };
+
+  const handleTouchStart = (event: TouchEvent<HTMLDivElement>) => {
+    touchStartX.current = event.touches[0]?.clientX ?? null;
+    stopAutoplay();
+  };
+
+  const handleTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
+    const startX = touchStartX.current;
+    const endX = event.changedTouches[0]?.clientX ?? null;
+
+    if (startX !== null && endX !== null) {
+      const deltaX = startX - endX;
+
+      if (Math.abs(deltaX) > 48) {
+        goToSlide(deltaX > 0 ? active + 1 : active - 1);
+      }
+    }
+
+    touchStartX.current = null;
+    startAutoplay();
+  };
+
+  const handleTouchCancel = () => {
+    touchStartX.current = null;
+    startAutoplay();
   };
 
   useEffect(() => {
@@ -106,10 +137,12 @@ export default function Carousel() {
     <section id="preview" className="w-full scroll-mt-28">
       <div
         className="mx-auto max-w-6xl px-4 pb-5 sm:px-6"
+        style={{ touchAction: "pan-y" }}
         onMouseEnter={stopAutoplay}
         onMouseLeave={startAutoplay}
-        onTouchStart={stopAutoplay}
-        onTouchEnd={startAutoplay}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchCancel}
       >
         <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950/95 shadow-[0_30px_80px_rgba(15,23,42,0.28)]">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.22),transparent_38%),linear-gradient(135deg,rgba(15,23,42,0.98),rgba(30,41,59,0.88))]" />

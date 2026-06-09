@@ -71,18 +71,56 @@
     "footerNote": "Oparte na powtórkach, klarowności i pewności siebie pod presją."
   },
   "carousel": {
-    "mainScreen": {
-      "title": "Wszystko w jednym miejscu",
-      "desc": "Śledź postępy, statystyki i zarządzaj nauką."
-    },
-    "splashScreen": {
-      "title": "Zacznij naukę w kilka sekund",
-      "desc": "Zaloguj się i wróć dokładnie tam, gdzie przerwałeś."
-    },
-    "flashcards": {
-      "title": "Nauka w trybie aktywnym",
-      "desc": "Ćwicz i utrwalaj wiedzę dzięki powtórkom."
-    }
+    "slides": [
+      {
+        "title": "Rozmowy techniczne zaczynają się tutaj",
+        "desc": "Przygotuj się do rozmów IT szybciej dzięki inteligentnym fiszkom i praktycznym ścieżkom nauki."
+      },
+      {
+        "title": "Wybierz swoją ścieżkę kariery",
+        "desc": "Skup się na umiejętnościach wymaganych na stanowiskach, które naprawdę Cię interesują."
+      },
+      {
+        "title": "Wszystkie postępy pod kontrolą",
+        "desc": "Śledź rozwój, wracaj do słabszych tematów i ucz się systematycznie każdego dnia."
+      },
+      {
+        "title": "Przygotuj się na prawdziwe pytania",
+        "desc": "Ćwicz zagadnienia, które regularnie pojawiają się podczas rozmów technicznych."
+      },
+      {
+        "title": "Myśl jak rekruter",
+        "desc": "Poznawaj różnice między podobnymi pojęciami i buduj głębsze zrozumienie technologii."
+      },
+      {
+        "title": "Opanuj fundamenty Data Engineering",
+        "desc": "Od hurtowni danych po architekturę systemów – ucz się krok po kroku."
+      },
+      {
+        "title": "Analizuj dane pewniej",
+        "desc": "Ćwicz interpretację wykresów i rozwijaj umiejętności analitycznego myślenia."
+      },
+      {
+        "title": "Zrozum, nie tylko zapamiętuj",
+        "desc": "Podpowiedzi pomagają szybciej opanować nawet bardziej złożone zagadnienia."
+      },
+      {
+        "title": "Sprawdź wiedzę w praktyce",
+        "desc": "Quizy i zadania pomagają utrwalić materiał oraz przygotować się do testów rekrutacyjnych."
+      },
+      {
+        "title": "Zamień ofertę pracy w plan nauki",
+        "desc": "Wklej link do ogłoszenia i generuj fiszki dopasowane do konkretnej rekrutacji."
+      },
+      {
+        "title": "Ćwicz odpowiedzi na głos",
+        "desc": "Symuluj rozmowy techniczne i buduj pewność siebie przed prawdziwą rekrutacją."
+      },
+      {
+        "title": "Buduj nawyk codziennej nauki",
+        "desc": "Śledź serie nauki, poziom opanowania materiału i rozwój w czasie."
+      }
+    ]
   },
   "proof": {
     "badge": "Sygnały zaufania",

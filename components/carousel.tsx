@@ -154,7 +154,7 @@ export default function Carousel() {
           <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-slate-950 to-transparent" />
 
           <div className="relative px-4 py-6 sm:px-8 sm:py-8 lg:py-9">
-            <div className="mb-6 flex items-start justify-between gap-3">
+            <div className="mb-6 flex min-h-[104px] items-start justify-between gap-3 sm:min-h-[112px] lg:min-h-[120px]">
               <div className="min-w-0 flex-1">
                 <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-cyan-100/80">
                   {t.header.preview}
@@ -233,7 +233,7 @@ export default function Carousel() {
             </div>
 
             <div className="mt-6 flex justify-center">
-              <div className="max-w-xl rounded-full border border-white/10 bg-white/5 px-5 py-3 text-center backdrop-blur">
+              <div className="flex min-h-[112px] w-full max-w-xl items-center justify-center rounded-[1.75rem] border border-white/10 bg-white/5 px-5 py-3 text-center backdrop-blur sm:min-h-[88px] sm:rounded-full">
                 <p className="text-lg font-semibold leading-7 text-white sm:text-xl">
                   {slides[active].desc}
                 </p>

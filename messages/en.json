@@ -1,8 +1,8 @@
 {
   "header": {
-    "features": "How it works",
+    "features": "Features",
     "preview": "Preview",
-    "proof": "Methodology",
+    "proof": "Why it matters",
     "cta": "Join",
     "ctaAria": "Join the waitlist"
   },
@@ -123,7 +123,7 @@
     ]
   },
   "proof": {
-    "badge": "Trust signals",
+    "badge": "Why you can trust it",
     "heading": "A product that feels focused from the first tap.",
     "subtitle": "Less theory, more repetition, more confidence when it matters.",
     "stats": [
@@ -137,7 +137,7 @@
   },
   "cta": {
     "badge": "Waitlist",
-    "title": "Be one of the first to join.",
+    "title": "Sign up as one of the first!",
     "subtitle": "Get early access when the first polished version is ready. No spam, just product updates.",
     "benefits": [
       "First access to the beta",
@@ -150,9 +150,9 @@
   "footer": {
     "tagline": "A focused practice system for junior developers who want to feel interview-ready faster.",
     "product": "Product",
-    "features": "How it works",
+    "features": "Features",
     "preview": "Preview",
-    "proof": "Methodology",
+    "proof": "Why it matters",
     "waitlist": "Waitlist",
     "social": "Social",
     "legal": "Terms of service"

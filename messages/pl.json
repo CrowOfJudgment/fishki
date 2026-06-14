@@ -1,8 +1,8 @@
 {
   "header": {
-    "features": "Jak działa",
+    "features": "Funkcje",
     "preview": "Demo",
-    "proof": "Metodologia",
+    "proof": "Dlaczego warto",
     "cta": "Dołącz",
     "ctaAria": "Dołącz do listy oczekujących"
   },
@@ -123,7 +123,7 @@
     ]
   },
   "proof": {
-    "badge": "Sygnały zaufania",
+    "badge": "Dlaczego warto zaufać",
     "heading": "Produkt, który od pierwszego kliknięcia dodaje ci pewności siebie.",
     "subtitle": "Mniej teorii, więcej powtórek, więcej pewności wtedy, gdy to naprawdę ważne.",
     "stats": [
@@ -137,7 +137,7 @@
   },
   "cta": {
     "badge": "Lista oczekujących",
-    "title": "Wejdź jako jeden z pierwszych.",
+    "title": "Zapisz się jako jeden z pierwszych!",
     "subtitle": "Otrzymaj wczesny dostęp, gdy pierwsza dopracowana wersja będzie gotowa. Bez spamu, tylko informacje o produkcie.",
     "benefits": [
       "Pierwszy dostęp do bety",
@@ -150,9 +150,9 @@
   "footer": {
     "tagline": "Skoncentrowany system ćwiczeń dla juniorów, którzy chcą szybciej poczuć się gotowi na rozmowy rekrutacyjne.",
     "product": "Produkt",
-    "features": "Jak działa",
+    "features": "Funkcje",
     "preview": "Demo",
-    "proof": "Metodologia",
+    "proof": "Dlaczego warto",
     "waitlist": "Lista oczekujących",
     "social": "Media społecznościowe",
     "legal": "Warunki usługi"

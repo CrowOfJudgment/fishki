@@ -1,14 +1,14 @@
 {
   "header": {
-    "features": "Funkcje",
+    "features": "Jak działa",
     "preview": "Demo",
-    "proof": "Dlaczego to działa",
+    "proof": "Metodologia",
     "cta": "Dołącz",
     "ctaAria": "Dołącz do listy oczekujących"
   },
   "hero": {
     "badge": "Najlepsze przygotowanie dla junior developerów",
-    "title": "Zdobądź następną pracę w IT szybciej",
+    "title": "Zdobądź pracę w IT szybciej",
     "subtitle": "Ćwicz pytania rekrutacyjne, które juniorzy naprawdę dostają na rozmowach.",
     "primaryCta": "Dołącz do listy oczekujących",
     "secondaryCta": "Zobacz produkt",
@@ -20,7 +20,7 @@
     ],
     "stats": [
       { "value": "3", "label": "tryby ćwiczeń" },
-      { "value": "24/7", "label": "dostępne zawsze" },
+      { "value": "24 / 7", "label": "dostępne zawsze" },
       { "value": "0", "label": "lania wody" }
     ],
     "cardLabel": "Dzisiejszy zestaw nauki",
@@ -41,7 +41,7 @@
     ]
   },
   "features": {
-    "badge": "Czemu to sprawia wrażenie premium",
+    "badge": "Dlaczego to działa",
     "heading": "Fiszki i symulacje rozmów kwalifikacyjnych oparte na prawdziwych pytaniach rekrutacyjnych, dzięki którym idziesz na rozmowę przygotowany, a nie zdany na zgadywanie.",
     "intro": "Krótkie ćwiczenia. Prawdziwe pytania. Spokojniejsza droga do pewności.",
     "value": {
@@ -137,7 +137,7 @@
   },
   "cta": {
     "badge": "Lista oczekujących",
-    "title": "Bądź na premierę.",
+    "title": "Wejdź jako jeden z pierwszych.",
     "subtitle": "Otrzymaj wczesny dostęp, gdy pierwsza dopracowana wersja będzie gotowa. Bez spamu, tylko informacje o produkcie.",
     "benefits": [
       "Pierwszy dostęp do bety",
@@ -150,9 +150,9 @@
   "footer": {
     "tagline": "Skoncentrowany system ćwiczeń dla juniorów, którzy chcą szybciej poczuć się gotowi na rozmowy rekrutacyjne.",
     "product": "Produkt",
-    "features": "Funkcje",
+    "features": "Jak działa",
     "preview": "Demo",
-    "proof": "Dlaczego to działa",
+    "proof": "Metodologia",
     "waitlist": "Lista oczekujących",
     "social": "Media społecznościowe",
     "legal": "Warunki usługi"

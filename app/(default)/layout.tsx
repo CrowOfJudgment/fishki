@@ -9,7 +9,7 @@ export default function DefaultLayout({
   return (
     <>
       <Header />
-      <main className="grow pt-16 sm:pt-24 lg:pt-28">{children}</main>
+      <main className="grow pt-20 sm:pt-28 lg:pt-32">{children}</main>
       <Footer border={true} />
     </>
   );

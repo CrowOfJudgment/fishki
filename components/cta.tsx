@@ -61,7 +61,7 @@ export default function Cta() {
 
           <div className="relative grid gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:gap-10">
             <div className="p-4 sm:p-6 lg:p-8">
-              <span className="inline-flex rounded-full border border-blue-500/15 bg-blue-500/8 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-blue-700">
+              <span className="inline-flex rounded-full border border-blue-500/15 bg-blue-500/8 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-blue-700">
                 {t.cta.badge}
               </span>
 
@@ -69,7 +69,7 @@ export default function Cta() {
                 {t.cta.title}
               </h2>
 
-              <p className="mt-5 max-w-xl text-lg leading-8 text-slate-600">
+              <p className="mt-5 max-w-xl text-lg leading-8 text-slate-600 xl:text-xl xl:leading-9">
                 {t.cta.subtitle}
               </p>
 
@@ -79,7 +79,7 @@ export default function Cta() {
                     <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-700 ring-1 ring-emerald-500/15">
                       <CheckIcon />
                     </span>
-                    <span className="text-sm leading-7 text-slate-700">
+                    <span className="text-[15px] leading-7 text-slate-700 sm:text-base sm:leading-8 xl:text-[17px]">
                       {benefit}
                     </span>
                   </li>
@@ -87,10 +87,10 @@ export default function Cta() {
               </ul>
 
               <div className="mt-8 rounded-2xl border border-slate-200/80 bg-white/80 px-4 py-4 shadow-[0_12px_30px_rgba(15,23,42,0.05)]">
-                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
                   {t.cta.cta}
                 </p>
-                <p className="mt-2 text-sm leading-6 text-slate-600">
+                <p className="mt-2 text-[15px] leading-7 text-slate-600 sm:text-base xl:text-[17px]">
                   {t.cta.formNote}
                 </p>
               </div>

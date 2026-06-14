@@ -9,19 +9,20 @@ export default function Logo({
   horizontal?: boolean;
 }) {
   const src = horizontal ? "/images/logo_horizontal.png" : "/images/logo.png";
-  const width = horizontal ? 1228 : 150;
-  const height = horizontal ? 453 : 150;
+  const aspectClass = horizontal ? "aspect-[1228/453]" : "aspect-square";
 
   return (
     <Link href="/" aria-label="Fishki" className={`inline-flex shrink-0 ${className}`.trim()}>
-      <Image
-        src={src}
-        alt="Fishki"
-        width={width}
-        height={height}
-        className="h-auto w-full"
-        priority
-      />
+      <span className={`relative block w-full ${aspectClass}`}>
+        <Image
+          src={src}
+          alt="Fishki"
+          fill
+          sizes={horizontal ? "(min-width: 1024px) 160px, 118px" : "150px"}
+          className="object-contain"
+          priority
+        />
+      </span>
     </Link>
   );
 }

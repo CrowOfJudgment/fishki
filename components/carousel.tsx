@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState, type TouchEvent } from "react";
+import Image from "next/image";
+import { useCallback, useEffect, useRef, useState, type TouchEvent } from "react";
 import { useT } from "@/lib/i18n-context";
 
 function PhoneMockup({
@@ -13,14 +14,16 @@ function PhoneMockup({
   scale?: number;
 }) {
   return (
-    <div className="relative w-[220px] max-w-full rounded-[34px] bg-gradient-to-b from-slate-900 via-black to-slate-900 p-[5px] shadow-[0_30px_90px_rgba(15,23,42,0.45)] sm:w-[280px] sm:rounded-[42px] sm:p-1.5">
+    <div className="relative w-[240px] max-w-full rounded-[36px] bg-gradient-to-b from-slate-900 via-black to-slate-900 p-[5px] shadow-[0_30px_90px_rgba(15,23,42,0.45)] sm:w-[300px] sm:rounded-[44px] sm:p-1.5 lg:w-[340px] xl:w-[380px]">
       <div className="absolute inset-x-10 top-3 h-8 rounded-full bg-white/10 blur-xl" />
       <div className="absolute left-1/2 top-2 h-1.5 w-24 -translate-x-1/2 rounded-full bg-white/20" />
-      <div className="relative flex h-[440px] items-center justify-center overflow-hidden rounded-[30px] bg-white ring-1 ring-white/10 sm:h-[560px] sm:rounded-[38px]">
-        <img
+      <div className="relative flex h-[480px] items-center justify-center overflow-hidden rounded-[32px] bg-white ring-1 ring-white/10 sm:h-[600px] sm:rounded-[40px] lg:h-[680px] xl:h-[760px]">
+        <Image
           alt={alt}
           src={src}
-          className="h-full w-full object-contain"
+          fill
+          sizes="(min-width: 1280px) 380px, (min-width: 1024px) 340px, (min-width: 640px) 300px, 240px"
+          className="object-contain"
           style={{ transform: `scale(${scale})` }}
         />
       </div>
@@ -82,25 +85,25 @@ export default function Carousel() {
     };
   });
 
-  const stopAutoplay = () => {
+  const stopAutoplay = useCallback(() => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
-  };
+  }, []);
 
-  const startAutoplay = () => {
+  const startAutoplay = useCallback(() => {
     if (intervalRef.current) return;
 
     intervalRef.current = setInterval(() => {
-      setActive((prev: number) => (prev + 1) % slides.length);
+      setActive((prev: number) => (prev + 1) % slideAssets.length);
     }, 4000);
-  };
+  }, []);
 
-  const goToSlide = (nextIndex: number) => {
-    const next = (nextIndex + slides.length) % slides.length;
+  const goToSlide = useCallback((nextIndex: number) => {
+    const next = (nextIndex + slideAssets.length) % slideAssets.length;
     setActive(next);
-  };
+  }, []);
 
   const handleTouchStart = (event: TouchEvent<HTMLDivElement>) => {
     touchStartX.current = event.touches[0]?.clientX ?? null;
@@ -131,7 +134,7 @@ export default function Carousel() {
   useEffect(() => {
     startAutoplay();
     return () => stopAutoplay();
-  }, []);
+  }, [startAutoplay, stopAutoplay]);
 
   return (
     <section id="preview" className="w-full scroll-mt-28">
@@ -150,13 +153,13 @@ export default function Carousel() {
           <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-slate-950 to-transparent" />
           <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-slate-950 to-transparent" />
 
-          <div className="relative px-4 py-6 sm:px-8 sm:py-8">
+          <div className="relative px-4 py-6 sm:px-8 sm:py-8 lg:py-9">
             <div className="mb-6 flex items-start justify-between gap-3">
               <div className="min-w-0 flex-1">
-                <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.3em] text-cyan-100/80">
+                <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-cyan-100/80">
                   {t.header.preview}
                 </span>
-                <h3 className="mt-2 text-xl font-semibold leading-tight text-white sm:text-2xl">
+                <h3 className="mt-2 text-2xl font-semibold leading-tight text-white lg:text-3xl">
                   {slides[active].title}
                 </h3>
               </div>
@@ -193,7 +196,7 @@ export default function Carousel() {
                   }}
                 >
                   {slides.map((slide, index) => (
-                    <div key={slide.src} className="min-w-full px-2 py-4 sm:px-6">
+                    <div key={slide.src} className="min-w-full px-2 py-2 sm:px-6">
                       <div
                         className={`flex justify-center transition-all duration-700 ${
                           index === active
@@ -231,7 +234,7 @@ export default function Carousel() {
 
             <div className="mt-6 flex justify-center">
               <div className="max-w-xl rounded-full border border-white/10 bg-white/5 px-5 py-3 text-center backdrop-blur">
-                <p className="text-lg font-semibold text-white">
+                <p className="text-lg font-semibold leading-7 text-white sm:text-xl">
                   {slides[active].desc}
                 </p>
               </div>

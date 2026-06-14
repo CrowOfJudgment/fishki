@@ -1,9 +1,9 @@
 "use client";
 
 import { createContext, useContext } from "react";
-import { getMessages, Locale } from "./i18n";
+import { getMessages, Locale, type Messages } from "./i18n";
 
-const I18nContext = createContext<any>(null);
+const I18nContext = createContext<Messages | null>(null);
 
 export function I18nProvider({
   locale,
@@ -22,5 +22,11 @@ export function I18nProvider({
 }
 
 export function useT() {
-  return useContext(I18nContext);
+  const messages = useContext(I18nContext);
+
+  if (!messages) {
+    throw new Error("useT must be used within I18nProvider");
+  }
+
+  return messages;
 }

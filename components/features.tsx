@@ -43,13 +43,13 @@ export default function Features() {
       />
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mx-auto max-w-3xl text-center">
-          <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-blue-200/90">
+          <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-blue-200/90">
             {t.features.badge}
           </span>
           <h2 className="mt-5 font-display text-3xl font-semibold leading-tight text-balance text-white sm:text-4xl lg:text-5xl">
             {t.features.heading}
           </h2>
-          <p className="mx-auto mt-5 max-w-2xl text-xl leading-8 text-slate-300">
+          <p className="mx-auto mt-5 max-w-2xl text-xl leading-8 text-slate-300 xl:text-[22px] xl:leading-9">
             {t.features.intro}
           </p>
         </div>
@@ -80,7 +80,7 @@ export default function Features() {
                   <h3 className="mt-6 font-display text-2xl font-semibold leading-tight text-white">
                     {data.heading}
                   </h3>
-                  <p className="mt-4 text-sm leading-7 text-slate-300">
+                  <p className="mt-4 text-[15px] leading-7 text-slate-300 sm:text-base sm:leading-8 xl:text-[17px]">
                     {data.text}
                   </p>
                 </div>

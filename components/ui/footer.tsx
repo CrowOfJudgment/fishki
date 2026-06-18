@@ -6,11 +6,10 @@ import { useT } from "@/lib/i18n-context";
 
 export default function Footer({ border = false }: { border?: boolean }) {
   const t = useT();
-  const year = new Date().getFullYear();
 
   const productLinks = [
-    { href: "#features", label: t.footer.features },
     { href: "#preview", label: t.footer.preview },
+    { href: "#features", label: t.footer.features },
     { href: "#proof", label: t.footer.proof },
   ];
 
@@ -34,13 +33,13 @@ export default function Footer({ border = false }: { border?: boolean }) {
           <div className="relative grid gap-10 lg:grid-cols-[1.1fr_0.8fr_0.8fr]">
             <div className="max-w-md">
               <Logo className="w-[120px] sm:w-[150px]" />
-              <p className="mt-5 text-sm leading-7 text-slate-600">
+              <p className="mt-5 text-[15px] leading-7 text-slate-600 sm:text-base sm:leading-8 xl:text-[17px]">
                 {t.footer.tagline}
               </p>
             </div>
 
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">
+              <p className="text-[13px] font-semibold uppercase tracking-[0.18em] text-slate-500 sm:text-sm">
                 {t.footer.product}
               </p>
               <ul className="mt-5 space-y-3">
@@ -48,7 +47,7 @@ export default function Footer({ border = false }: { border?: boolean }) {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="group inline-flex items-center gap-2 text-sm font-medium text-slate-700 transition hover:text-slate-950"
+                      className="group inline-flex items-center gap-2 text-[15px] font-medium text-slate-700 transition hover:text-slate-950 sm:text-base xl:text-[17px]"
                     >
                       <span className="h-1.5 w-1.5 rounded-full bg-slate-300 transition group-hover:bg-slate-700" />
                       {link.label}
@@ -60,14 +59,14 @@ export default function Footer({ border = false }: { border?: boolean }) {
 
             <div className="grid gap-6 sm:grid-cols-2 lg:block">
               <div className="rounded-2xl border border-slate-200/80 bg-white/80 p-5 shadow-[0_12px_30px_rgba(15,23,42,0.05)]">
-                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">
+                <p className="text-[13px] font-semibold uppercase tracking-[0.18em] text-slate-500 sm:text-sm">
                   {t.footer.social}
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {["LinkedIn", "IG", "TIKTOK"].map((label) => (
                     <span
                       key={label}
-                      className="inline-flex h-10 min-w-10 items-center justify-center rounded-full border border-slate-200 bg-slate-50 px-3 text-xs font-semibold uppercase tracking-[0.22em] text-slate-600"
+                      className="inline-flex h-10 min-w-10 items-center justify-center rounded-full border border-slate-200 bg-slate-50 px-3 text-xs font-semibold uppercase tracking-[0.16em] text-slate-600"
                     >
                       {label}
                     </span>
@@ -76,10 +75,10 @@ export default function Footer({ border = false }: { border?: boolean }) {
               </div>
 
               <div className="rounded-2xl border border-slate-200/80 bg-white/80 p-5 shadow-[0_12px_30px_rgba(15,23,42,0.05)]">
-                {/* <p className="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">
+                {/* <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
                   {t.footer.legal}
                 </p> */}
-                <p className="mt-4 text-sm leading-6 text-slate-600">
+                <p className="mt-4 text-[15px] leading-7 text-slate-600 sm:text-base xl:text-[17px]">
                   © 2026 Fishki. Built with care for junior developers.
                 </p>
               </div>

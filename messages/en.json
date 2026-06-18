@@ -2,13 +2,13 @@
   "header": {
     "features": "Features",
     "preview": "Preview",
-    "proof": "Why it works",
+    "proof": "Why it matters",
     "cta": "Join",
     "ctaAria": "Join the waitlist"
   },
   "hero": {
     "badge": "The best prep for junior developers",
-    "title": "Land your next IT job faster",
+    "title": "Land an IT job faster",
     "subtitle": "Practice interview questions that juniors actually get on interviews.",
     "primaryCta": "Join the waitlist",
     "secondaryCta": "See the product",
@@ -20,7 +20,7 @@
     ],
     "stats": [
       { "value": "3", "label": "practice modes" },
-      { "value": "24/7", "label": "available anytime" },
+      { "value": "24 / 7", "label": "available anytime" },
       { "value": "0", "label": "fluff" }
     ],
     "cardLabel": "Today’s study stack",
@@ -41,7 +41,7 @@
     ]
   },
   "features": {
-    "badge": "Why it feels premium",
+    "badge": "Why it works",
     "heading": "Flashcards and interview simulations designed around real hiring questions - so you walk into interviews prepared, not guessing.",
     "intro": "Short drills. Real questions. A calmer path to confidence.",
     "value": {
@@ -123,7 +123,7 @@
     ]
   },
   "proof": {
-    "badge": "Trust signals",
+    "badge": "Why you can trust it",
     "heading": "A product that feels focused from the first tap.",
     "subtitle": "Less theory, more repetition, more confidence when it matters.",
     "stats": [
@@ -137,7 +137,7 @@
   },
   "cta": {
     "badge": "Waitlist",
-    "title": "Stay close to the launch.",
+    "title": "Sign up as one of the first!",
     "subtitle": "Get early access when the first polished version is ready. No spam, just product updates.",
     "benefits": [
       "First access to the beta",
@@ -152,7 +152,7 @@
     "product": "Product",
     "features": "Features",
     "preview": "Preview",
-    "proof": "Why it works",
+    "proof": "Why it matters",
     "waitlist": "Waitlist",
     "social": "Social",
     "legal": "Terms of service"

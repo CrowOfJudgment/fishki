@@ -2,13 +2,18 @@
 
 import Script from "next/script";
 import { useEffect } from "react";
-import { useT } from "@/lib/i18n-context";
+import { useLocale, useT } from "@/lib/i18n-context";
 
 type TallyWindow = Window & {
   Tally?: {
     loadEmbeds?: () => void;
   };
 };
+
+const EN_TALLY_SRC =
+  "https://tally.so/embed/ODkPZk?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1";
+const PL_TALLY_SRC =
+  "https://tally.so/embed/WOQr4j?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1";
 
 function CheckIcon() {
   return (
@@ -31,13 +36,19 @@ function CheckIcon() {
 
 export default function Cta() {
   const t = useT();
+  const locale = useLocale();
+  const isPolish = locale === "pl";
+  const formSrc = isPolish ? PL_TALLY_SRC : EN_TALLY_SRC;
+  const formTitle = isPolish ? "Fishki IT PL" : t.cta.cta;
+  const formHeight = isPolish ? 441 : 320;
+
   const loadEmbeds = () => {
     (window as TallyWindow).Tally?.loadEmbeds?.();
   };
 
   useEffect(() => {
     loadEmbeds();
-  }, []);
+  }, [locale]);
 
   return (
     <section
@@ -120,10 +131,10 @@ export default function Cta() {
                 <div className="flex flex-1 bg-[linear-gradient(180deg,rgba(15,23,42,0.03),rgba(15,23,42,0))] p-4 sm:p-5 lg:p-6">
                   <div className="min-h-[420px] w-full overflow-hidden rounded-[1.4rem] border border-slate-200/80 bg-white shadow-inner">
                     <iframe
-                      data-tally-src="https://tally.so/embed/ODkPZk?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
-                      title={t.cta.cta}
+                      data-tally-src={formSrc}
+                      title={formTitle}
                       width="100%"
-                      height="320"
+                      height={formHeight}
                       className="block w-full border-0"
                       frameBorder="0"
                       marginHeight={0}

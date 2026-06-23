@@ -2,18 +2,13 @@
 
 import Script from "next/script";
 import { useEffect } from "react";
-import { useLocale, useT } from "@/lib/i18n-context";
+import { useT } from "@/lib/i18n-context";
 
 type TallyWindow = Window & {
   Tally?: {
     loadEmbeds?: () => void;
   };
 };
-
-const EN_TALLY_SRC =
-  "https://tally.so/embed/ODkPZk?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1";
-const PL_TALLY_SRC =
-  "https://tally.so/embed/WOQr4j?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1";
 
 function CheckIcon() {
   return (
@@ -36,19 +31,13 @@ function CheckIcon() {
 
 export default function Cta() {
   const t = useT();
-  const locale = useLocale();
-  const isPolish = locale === "pl";
-  const formSrc = isPolish ? PL_TALLY_SRC : EN_TALLY_SRC;
-  const formTitle = isPolish ? "Fishki IT PL" : t.cta.cta;
-  const formHeight = isPolish ? 441 : 320;
-
   const loadEmbeds = () => {
     (window as TallyWindow).Tally?.loadEmbeds?.();
   };
 
   useEffect(() => {
     loadEmbeds();
-  }, [locale]);
+  }, []);
 
   return (
     <section
@@ -107,20 +96,34 @@ export default function Cta() {
               </div>
             </div>
 
-            <div className="relative p-1 sm:p-2 lg:p-3">
+            <div
+              id="waitlist-form"
+              className="relative scroll-mt-28 p-1 sm:p-2 lg:p-3"
+            >
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute -inset-4 rounded-[2rem] bg-slate-950/5 blur-2xl"
               />
 
               <div className="relative flex h-full min-h-[520px] flex-col overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white/90 shadow-[0_24px_70px_rgba(15,23,42,0.12)] sm:min-h-[560px] lg:min-h-[620px]">
+                {/* <div className="flex items-center justify-between gap-4 border-b border-slate-200/70 px-5 py-4 sm:px-6">
+                  <div className="min-w-0">
+                    <p className="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">
+                      {t.cta.cta}
+                    </p>
+                    <p className="mt-1 text-sm leading-6 text-slate-600">
+                      {t.cta.formNote}
+                    </p>
+                  </div>
+                </div> */}
+
                 <div className="flex flex-1 bg-[linear-gradient(180deg,rgba(15,23,42,0.03),rgba(15,23,42,0))] p-4 sm:p-5 lg:p-6">
                   <div className="min-h-[420px] w-full overflow-hidden rounded-[1.4rem] border border-slate-200/80 bg-white shadow-inner">
                     <iframe
-                      data-tally-src={formSrc}
-                      title={formTitle}
+                      data-tally-src="https://tally.so/embed/ODkPZk?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+                      title={t.cta.cta}
                       width="100%"
-                      height={formHeight}
+                      height="320"
                       className="block w-full border-0"
                       frameBorder="0"
                       marginHeight={0}

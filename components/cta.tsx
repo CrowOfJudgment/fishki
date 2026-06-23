@@ -107,13 +107,27 @@ export default function Cta() {
               </div>
             </div>
 
-            <div className="relative p-1 sm:p-2 lg:p-3">
+            <div
+              id="waitlist-form"
+              className="relative scroll-mt-28 p-1 sm:p-2 lg:p-3"
+            >
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute -inset-4 rounded-[2rem] bg-slate-950/5 blur-2xl"
               />
 
               <div className="relative flex h-full min-h-[520px] flex-col overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white/90 shadow-[0_24px_70px_rgba(15,23,42,0.12)] sm:min-h-[560px] lg:min-h-[620px]">
+                {/* <div className="flex items-center justify-between gap-4 border-b border-slate-200/70 px-5 py-4 sm:px-6">
+                  <div className="min-w-0">
+                    <p className="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">
+                      {t.cta.cta}
+                    </p>
+                    <p className="mt-1 text-sm leading-6 text-slate-600">
+                      {t.cta.formNote}
+                    </p>
+                  </div>
+                </div> */}
+
                 <div className="flex flex-1 bg-[linear-gradient(180deg,rgba(15,23,42,0.03),rgba(15,23,42,0))] p-4 sm:p-5 lg:p-6">
                   <div className="min-h-[420px] w-full overflow-hidden rounded-[1.4rem] border border-slate-200/80 bg-white shadow-inner">
                     <iframe

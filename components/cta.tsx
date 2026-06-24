@@ -116,7 +116,10 @@ export default function Cta() {
                 className="pointer-events-none absolute -inset-4 rounded-[2rem] bg-slate-950/5 blur-2xl"
               />
 
-              <div className="relative flex h-full min-h-[520px] flex-col overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white/90 shadow-[0_24px_70px_rgba(15,23,42,0.12)] sm:min-h-[560px] lg:min-h-[620px]">
+              <div
+                id="waitlist-card"
+                className="relative flex h-full min-h-[520px] scroll-mt-24 flex-col overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white/90 shadow-[0_24px_70px_rgba(15,23,42,0.12)] sm:min-h-[560px] sm:scroll-mt-28 lg:min-h-[620px]"
+              >
                 {/* <div className="flex items-center justify-between gap-4 border-b border-slate-200/70 px-5 py-4 sm:px-6">
                   <div className="min-w-0">
                     <p className="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">

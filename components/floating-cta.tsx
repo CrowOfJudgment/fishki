@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useT } from "@/lib/i18n-context";
+import { scrollToWaitlist } from "@/lib/scroll-to-waitlist";
 
 export default function FloatingCTA() {
   const [visible, setVisible] = useState(false);
@@ -20,6 +21,7 @@ export default function FloatingCTA() {
   return (
     <a
       href="#waitlist-form"
+      onClick={scrollToWaitlist}
       className={`
         fixed bottom-4 left-4 right-4 z-50 mx-auto flex w-fit items-center gap-3 rounded-full border border-[#FFECA0] bg-[#FFD84D] px-5 py-3.5 text-[15px] font-semibold uppercase tracking-[0.08em] text-slate-950 shadow-[0_18px_50px_rgba(255,216,77,0.32)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#FFE680] sm:bottom-6 sm:left-auto sm:right-6 sm:mx-0 sm:text-base
         ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"}

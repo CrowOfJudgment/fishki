@@ -1,6 +1,7 @@
 "use client";
 
 import { useT } from "@/lib/i18n-context";
+import { scrollToWaitlist } from "@/lib/scroll-to-waitlist";
 
 export default function HeroHome() {
   const t = useT();
@@ -29,6 +30,7 @@ export default function HeroHome() {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <a
                 href="#waitlist-form"
+                onClick={scrollToWaitlist}
                 className="inline-flex items-center justify-center rounded-full bg-[#FFD84D] px-6 py-3.5 text-[15px] font-semibold uppercase tracking-[0.08em] text-slate-950 shadow-[0_12px_30px_rgba(255,216,77,0.32)] transition hover:-translate-y-0.5 hover:bg-[#FFE680] sm:text-base"
               >
                 {t.hero.primaryCta}

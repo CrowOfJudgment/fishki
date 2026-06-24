@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import Logo from "./logo";
 import { useT } from "@/lib/i18n-context";
+import { scrollToWaitlist } from "@/lib/scroll-to-waitlist";
 
 export default function Header() {
   const t = useT();
@@ -81,6 +82,7 @@ export default function Header() {
           <div className="flex items-center gap-2">
             <Link
               href="#waitlist-form"
+              onClick={scrollToWaitlist}
               aria-label={t.header.ctaAria ?? t.header.cta}
               className="inline-flex h-11 items-center justify-center rounded-full bg-[#FFD84D] px-6 text-base font-semibold uppercase tracking-[0.08em] text-slate-950 shadow-[0_10px_30px_rgba(255,216,77,0.32)] transition hover:-translate-y-0.5 hover:bg-[#FFE680] xl:text-[17px]"
             >
